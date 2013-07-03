@@ -42,7 +42,8 @@ module Aduki
     @@types = { }
 
     def aduki types
-      @@types[self] = types
+      @@types[self] ||= { }
+      @@types[self] = @@types[self].merge types
     end
 
     def aduki_type_for_attribute_name name

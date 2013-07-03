@@ -37,6 +37,8 @@ class Model
 
   attr_accessor :name, :email, :item, :thing, :gadget
   attr_accessor :machines, :contraptions, :countries
-  aduki :gadget => Gadget, :machines => Machine, :contraptions => Contraption
+  aduki :gadget => Gadget
+  aduki :machines => Machine
+  aduki :contraptions => Contraption
 end
 
