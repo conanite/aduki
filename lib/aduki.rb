@@ -47,7 +47,8 @@ module Aduki
     end
 
     def aduki_type_for_attribute_name name
-      @@types[self][name.to_sym]
+      hsh = @@types[self]
+      hsh ? hsh[name.to_sym] : nil
     end
   end
 
