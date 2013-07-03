@@ -6,37 +6,37 @@ RSpec.configure do |config|
 end
 
 class Contraption
-  include Azuki::Initializer
+  include Aduki::Initializer
   attr_accessor :x, :y
 end
 
 class Assembly
-  include Azuki::Initializer
+  include Aduki::Initializer
   attr_accessor :name, :colour, :size
 end
 
 class MachineBuilder
-  include Azuki::Initializer
+  include Aduki::Initializer
   attr_accessor :name, :email, :phone, :office
 end
 
 class Gadget
-  include Azuki::Initializer
+  include Aduki::Initializer
   attr_accessor :name, :price, :supplier
 end
 
 class Machine
-  include Azuki::Initializer
+  include Aduki::Initializer
   attr_accessor :name, :weight, :speed, :builder, :team
   attr_accessor :assemblies, :dimensions
-  azuki :assemblies => Assembly, :builder => MachineBuilder
+  aduki :assemblies => Assembly, :builder => MachineBuilder
 end
 
 class Model
-  include Azuki::Initializer
+  include Aduki::Initializer
 
   attr_accessor :name, :email, :item, :thing, :gadget
   attr_accessor :machines, :contraptions, :countries
-  azuki :gadget => Gadget, :machines => Machine, :contraptions => Contraption
+  aduki :gadget => Gadget, :machines => Machine, :contraptions => Contraption
 end
 

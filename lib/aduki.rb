@@ -1,8 +1,8 @@
-require "azuki/version"
+require "aduki/version"
 
-module Azuki
+module Aduki
   def self.to_value klass, setter, value
-    type = klass.azuki_type_for_attribute_name setter
+    type = klass.aduki_type_for_attribute_name setter
     type ? type.new(value) : value
   end
 
@@ -32,7 +32,7 @@ module Azuki
         end
         array << to_value(klass, setter, value)
       else
-        type = klass.azuki_type_for_attribute_name setter
+        type = klass.aduki_type_for_attribute_name setter
         object.send "#{setter}=", to_value(klass, setter, value)
       end
     end
@@ -41,22 +41,22 @@ module Azuki
   module ClassMethods
     @@types = { }
 
-    def azuki types
+    def aduki types
       @@types[self] = types
     end
 
-    def azuki_type_for_attribute_name name
+    def aduki_type_for_attribute_name name
       @@types[self][name.to_sym]
     end
   end
 
   module Initializer
     def initialize attrs
-      Azuki.apply_attributes self, attrs
+      Aduki.apply_attributes self, attrs
     end
 
     def self.included(base)
-      base.extend Azuki::ClassMethods
+      base.extend Aduki::ClassMethods
     end
   end
 end

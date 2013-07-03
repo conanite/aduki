@@ -1,7 +1,7 @@
-require "azuki"
+require "aduki"
 require "spec_helper"
 
-describe Azuki::Initializer do
+describe Aduki::Initializer do
 
   it "should set a bunch of properties from a hash of property paths" do
     props = {
@@ -32,7 +32,7 @@ describe Azuki::Initializer do
       "machines[0].dimensions[1]"   => "6456.64",
       "machines[0].dimensions[2]"   => "3859.39",
       "machines[0].dimensions[3]"   => "2365.68",
-      "machines[0].team.lead"       => "Shakespeare", # there is no class definition for #team, so Azuki will apply a hash with properties #lead, #code, #design
+      "machines[0].team.lead"       => "Shakespeare", # there is no class definition for #team, so Aduki will apply a hash with properties #lead, #code, #design
       "machines[0].team.code"       => "Chaucer",
       "machines[0].team.design"     => "Jobs",
       "machines[1].name"           => "The Second Machine",

@@ -3,16 +3,16 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'azuki/version'
+require 'aduki/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "azuki"
-  gem.version       = Azuki::VERSION
+  gem.name          = "aduki"
+  gem.version       = Aduki::VERSION
   gem.authors       = ["Conan Dalton"]
   gem.email         = ["conan@conandalton.net"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = "https://github.com/conanite/azuki"
+  gem.description   = %q{recursive attribute setting for ruby objects}
+  gem.summary       = %q{set object attributes recursively from an attributes hash}
+  gem.homepage      = "https://github.com/conanite/aduki"
 
   gem.add_development_dependency 'rspec', '~> 2.9'
 
