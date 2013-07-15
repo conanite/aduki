@@ -9,10 +9,12 @@ Gem::Specification.new do |gem|
   gem.name          = "aduki"
   gem.version       = Aduki::VERSION
   gem.authors       = ["Conan Dalton"]
+  gem.license       = 'MIT'
   gem.email         = ["conan@conandalton.net"]
   gem.description   = %q{recursive attribute setting for ruby objects}
   gem.summary       = %q{set object attributes recursively from an attributes hash}
   gem.homepage      = "https://github.com/conanite/aduki"
+
 
   gem.add_development_dependency 'rspec', '~> 2.9'
 
