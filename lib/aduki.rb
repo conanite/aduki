@@ -15,10 +15,8 @@ module Aduki
         first, rest = setter.split(/\./, 2)
         setters[first] ||= { }
         setters[first][rest] = value
-      elsif setter.match /\[\d+\]/
-        setters[setter] = value
       else
-        object.send "#{setter}=", value
+        setters[setter] = value
       end
     end
 
@@ -32,7 +30,6 @@ module Aduki
         end
         array << to_value(klass, setter, value)
       else
-        type = klass.aduki_type_for_attribute_name setter
         object.send "#{setter}=", to_value(klass, setter, value)
       end
     end
