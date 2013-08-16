@@ -28,7 +28,7 @@ end
 class Machine
   include Aduki::Initializer
   attr_accessor :name, :weight, :speed, :builder, :team
-  attr_accessor :assemblies, :dimensions
+  attr_accessor :assemblies, :dimensions, :helpers
   aduki :assemblies => Assembly, :builder => MachineBuilder
 end
 
