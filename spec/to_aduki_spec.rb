@@ -7,4 +7,14 @@ describe Aduki do
     props = Aduki.to_aduki hsh
     props.should == { "foo" => "bar" }
   end
+
+  it "should flatten nested keys" do
+    hsh = { "foo" => "bar", "bing" => { "boo" => "wogga", "tingle" => "wimp" } }
+    props = Aduki.to_aduki hsh
+    props.should == {
+      "foo"         => "bar",
+      "bing.boo"    => "wogga",
+      "bing.tingle" => "wimp"
+    }
+  end
 end

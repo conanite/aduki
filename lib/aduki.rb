@@ -1,9 +1,15 @@
 require "aduki/version"
 
 module Aduki
-  def self.to_aduki hsh
-    hsh.keys.inject({ }) { |result, k|
-      result[k] = hsh[k]
+  def self.to_aduki hsh, collector={ }, prefix=""
+    hsh.keys.inject(collector) { |result, k|
+      v = hsh[k]
+      case v
+      when Hash
+        to_aduki v, collector, "#{k}."
+      else
+        result["#{prefix}#{k}"] = v
+      end
       result
     }
   end
