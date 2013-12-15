@@ -6,7 +6,7 @@ module Aduki
       v = hsh[k]
       case v
       when Hash
-        to_aduki v, collector, "#{k}."
+        to_aduki v, collector, "#{prefix}#{k}."
       else
         result["#{prefix}#{k}"] = v
       end
