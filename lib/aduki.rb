@@ -1,17 +1,22 @@
 require "aduki/version"
 
 module Aduki
-  def self.to_aduki hsh, collector={ }, prefix=""
-    hsh.keys.inject(collector) { |result, k|
-      v = hsh[k]
-      case v
-      when Hash
-        to_aduki v, collector, "#{prefix}#{k}."
-      else
-        result["#{prefix}#{k}"] = v
+  def self.to_aduki obj, collector={ }, key="", join=""
+    case obj
+    when Hash
+      obj.keys.inject(collector) { |result, k|
+        v = obj[k]
+        to_aduki v, collector, "#{key}#{join}#{k}", "."
+        result
+      }
+    when Array
+      obj.each_with_index do |av, ix|
+        to_aduki av, collector, "#{key}[#{ix}]", "."
       end
-      result
-    }
+    else
+      collector[key] = obj
+    end
+    collector
   end
 
   def self.to_value klass, setter, value
