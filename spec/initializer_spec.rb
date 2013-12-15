@@ -116,6 +116,21 @@ describe Aduki::Initializer do
     model.machines[0].dimensions[2].should == "3859.39"
     model.machines[0].dimensions[3].should == "2365.68"
     model.machines[0].team.should == { "lead" => "Shakespeare", "code" => "Chaucer", "design" => "Jobs"}
+    model.machines[0].helpers["jim"].should be_a MachineBuilder
+    model.machines[0].helpers["jim"].name.should == "Jim Appleby"
+    model.machines[0].helpers["jim"].email.should == "Jim.Appleby@example.com"
+    model.machines[0].helpers["jim"].phone.should == "123 456 789"
+    model.machines[0].helpers["jim"].office.should == "Elephant & Castle"
+    model.machines[0].helpers["ben"].should be_a MachineBuilder
+    model.machines[0].helpers["ben"].name.should == "Ben Barnes"
+    model.machines[0].helpers["ben"].email.should == "Ben.Barnes@example.com"
+    model.machines[0].helpers["ben"].phone.should == "123 456 790"
+    model.machines[0].helpers["ben"].office.should == "Cockney"
+    model.machines[0].helpers["pat"].should be_a MachineBuilder
+    model.machines[0].helpers["pat"].name.should == "Patrick O'Brien"
+    model.machines[0].helpers["pat"].email.should == "Patrick.O.Brien@example.com"
+    model.machines[0].helpers["pat"].phone.should == "123 456 791"
+    model.machines[0].helpers["pat"].office.should == "Hammersmith"
     model.machines[1].name.should == "The Second Machine"
     model.machines[1].weight.should == "34"
     model.machines[1].speed.should == "289"

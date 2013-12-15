@@ -30,6 +30,7 @@ class Machine
   attr_accessor :name, :weight, :speed, :builder, :team
   attr_accessor :assemblies, :dimensions, :helpers
   aduki :assemblies => Assembly, :builder => MachineBuilder
+  aduki :helpers => { :key => MachineBuilder }
 end
 
 class Model

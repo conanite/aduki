@@ -3,15 +3,26 @@ require "aduki/version"
 module Aduki
   def self.to_value klass, setter, value
     type = klass.aduki_type_for_attribute_name setter
-    type ? type.new(value) : value
+    if type.is_a? Hash
+      to_typed_hash type.values.first, value
+    else
+      type ? type.new(value) : value
+    end
   end
 
-  def self.apply_attributes object, attrs
-    setters = { }
-    klass = object.class
+  def self.to_typed_hash klass, value
+    setters = split_attributes value
+    hsh = { }
+    setters.each { |k, v|
+      hsh[k] = klass.new(v)
+    }
+    hsh
+  end
 
+  def self.split_attributes attrs
+    setters = { }
     attrs.each do |setter, value|
-      if setter.match /\./
+      if setter.match(/\./)
         first, rest = setter.split(/\./, 2)
         setters[first] ||= { }
         setters[first][rest] = value
@@ -19,10 +30,16 @@ module Aduki
         setters[setter] = value
       end
     end
+    setters
+  end
+
+  def self.apply_attributes object, attrs
+    setters = split_attributes attrs
+    klass = object.class
 
     setters.each do |setter, value|
-      if setter.match /\[\d+\]/
-        setter = setter.gsub /\[\d+\]/, ''
+      if setter.match(/\[\d+\]/)
+        setter = setter.gsub(/\[\d+\]/, '')
         array = object.send setter.to_sym
         if array == nil
           array = []
