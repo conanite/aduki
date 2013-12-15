@@ -1,6 +1,13 @@
 require "aduki/version"
 
 module Aduki
+  def self.to_aduki hsh
+    hsh.keys.inject({ }) { |result, k|
+      result[k] = hsh[k]
+      result
+    }
+  end
+
   def self.to_value klass, setter, value
     type = klass.aduki_type_for_attribute_name setter
     if type.is_a? Hash
