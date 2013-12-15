@@ -165,5 +165,36 @@ describe Aduki::Initializer do
     model.countries[2].should == "Germany"
     model.countries[3].should == "Ireland"
     model.countries[4].should == "Spain"
+
+    sensibly_indexed_props = props.merge({
+      "machines[1].assemblies[0].name"   => "second machine, first assembly",  # the array index distinguishes items but does not order them
+      "machines[1].assemblies[0].colour" => "purple",
+      "machines[1].assemblies[0].size"   => "pretty small",
+      "machines[1].assemblies[1].name"   => "second machine, second assembly",
+      "machines[1].assemblies[1].colour" => "turquoise",
+      "machines[1].assemblies[1].size"   => "large-ish",
+      "machines[1].assemblies[2].name"   => "second machine, third assembly",
+      "machines[1].assemblies[2].colour" => "magenta",
+      "machines[1].assemblies[2].size"   => "gigantic",
+      "machines[1].dimensions[0]"   => "1985.85",
+      "machines[1].dimensions[1]"   => "7234.92",
+      "machines[1].dimensions[2]"   => "9725.52",
+      "machines[1].dimensions[3]"   => "3579.79",
+    })
+
+    silly_keys = [ "machines[1].assemblies[98].name",
+                   "machines[1].assemblies[98].colour",
+                   "machines[1].assemblies[98].size",
+                   "machines[1].assemblies[99].name",
+                   "machines[1].assemblies[99].colour",
+                   "machines[1].assemblies[99].size",
+                   "machines[1].dimensions[20]",
+                   "machines[1].dimensions[30]",
+                   "machines[1].dimensions[40]",
+                   "machines[1].dimensions[50]"]
+
+    silly_keys.each { |k| sensibly_indexed_props.delete k }
+
+    Aduki.to_aduki(model).should == sensibly_indexed_props
   end
 end

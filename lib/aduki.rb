@@ -13,8 +13,16 @@ module Aduki
       obj.each_with_index do |av, ix|
         to_aduki av, collector, "#{key}[#{ix}]", "."
       end
-    else
+    when String, Numeric, Symbol
       collector[key] = obj
+    else
+      vv = obj.instance_variables
+      vv.each do |v|
+        accessor = v.to_s.gsub(/^@/, "").to_sym
+        if obj.respond_to?(accessor) && obj.respond_to?("#{accessor}=".to_sym)
+          to_aduki obj.send(accessor), collector, "#{key}#{join}#{accessor}", "."
+        end
+      end
     end
     collector
   end
