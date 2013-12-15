@@ -48,6 +48,7 @@ Here's an abbreviated version:
       attr_accessor :name, :weight, :speed, :builder, :team
       attr_accessor :assemblies, :dimensions
       aduki :assemblies => Assembly, :builder => MachineBuilder
+      aduki :helpers => { :key => MachineBuilder }
     end
 
     class Model
@@ -70,6 +71,13 @@ The #aduki class method allows you identify which types to initialise for each f
 This line instructs aduki to initialise the #gadget field with a Gadget object. It also instructs aduki to initialize each element of the #machines
 array with a Machine object. Aduki decides to create an object or an array of objects depending on the attributes-hash contents, rather than on any
 metadata you may specify here.
+
+
+The following line tells aduki to expect a hash for the #helpers attribute, and for each value in the hash is should construct a new MachineBuilder instance:
+
+      aduki :helpers => { :key => MachineBuilder }
+
+
 
 ## Contributing
 
