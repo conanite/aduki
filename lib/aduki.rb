@@ -63,7 +63,7 @@ module Aduki
     setters = split_attributes attrs
     klass = object.class
 
-    setters.each do |setter, value|
+    setters.sort.each do |setter, value|
       if setter.match(/\[\d+\]/)
         setter = setter.gsub(/\[\d+\]/, '')
         array = object.send setter.to_sym

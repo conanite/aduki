@@ -54,7 +54,7 @@ describe Aduki::Initializer do
       "machines[1].builder.email"  => "waggie@bump",
       "machines[1].builder.phone"  => "4101",
       "machines[1].builder.office" => "3rd floor room 23",
-      "machines[1].assemblies[98].name"   => "second machine, first assembly",  # the array index distinguishes items but does not order them
+      "machines[1].assemblies[98].name"   => "second machine, first assembly",  # the array index orders items but the position is not respected
       "machines[1].assemblies[98].colour" => "purple",
       "machines[1].assemblies[98].size"   => "pretty small",
       "machines[1].assemblies[1].name"   => "second machine, second assembly",
@@ -138,12 +138,12 @@ describe Aduki::Initializer do
     model.machines[1].builder.email.should == "waggie@bump"
     model.machines[1].builder.phone.should == "4101"
     model.machines[1].builder.office.should == "3rd floor room 23"
-    model.machines[1].assemblies[0].name.should == "second machine, first assembly"
-    model.machines[1].assemblies[0].colour.should == "purple"
-    model.machines[1].assemblies[0].size.should == "pretty small"
-    model.machines[1].assemblies[1].name.should == "second machine, second assembly"
-    model.machines[1].assemblies[1].colour.should == "turquoise"
-    model.machines[1].assemblies[1].size.should == "large-ish"
+    model.machines[1].assemblies[0].name.should == "second machine, second assembly"
+    model.machines[1].assemblies[0].colour.should == "turquoise"
+    model.machines[1].assemblies[0].size.should == "large-ish"
+    model.machines[1].assemblies[1].name.should == "second machine, first assembly"
+    model.machines[1].assemblies[1].colour.should == "purple"
+    model.machines[1].assemblies[1].size.should == "pretty small"
     model.machines[1].assemblies[2].name.should == "second machine, third assembly"
     model.machines[1].assemblies[2].colour.should == "magenta"
     model.machines[1].assemblies[2].size.should == "gigantic"
@@ -167,12 +167,12 @@ describe Aduki::Initializer do
     model.countries[4].should == "Spain"
 
     sensibly_indexed_props = props.merge({
-      "machines[1].assemblies[0].name"   => "second machine, first assembly",  # the array index distinguishes items but does not order them
-      "machines[1].assemblies[0].colour" => "purple",
-      "machines[1].assemblies[0].size"   => "pretty small",
-      "machines[1].assemblies[1].name"   => "second machine, second assembly",
-      "machines[1].assemblies[1].colour" => "turquoise",
-      "machines[1].assemblies[1].size"   => "large-ish",
+      "machines[1].assemblies[0].name"   => "second machine, second assembly",
+      "machines[1].assemblies[0].colour" => "turquoise",
+      "machines[1].assemblies[0].size"   => "large-ish",
+      "machines[1].assemblies[1].name"   => "second machine, first assembly",  # the array index orders items but the position is not respected
+      "machines[1].assemblies[1].colour" => "purple",
+      "machines[1].assemblies[1].size"   => "pretty small",
       "machines[1].assemblies[2].name"   => "second machine, third assembly",
       "machines[1].assemblies[2].colour" => "magenta",
       "machines[1].assemblies[2].size"   => "gigantic",
