@@ -70,7 +70,7 @@ describe Aduki do
         "harpoon" => ["shonk",
                       "twaddle",
                       %w{alpha beta gamma},
-                      { wing: :tip, tail: :fin } ]
+                      { :wing => :tip, :tail => :fin } ]
       } }
     props = Aduki.to_aduki hsh
     props.should == {
@@ -96,7 +96,7 @@ describe Aduki do
         "harpoon" => ["shonk",
                       "twaddle",
                       %w{alpha beta gamma},
-                      { wing: :tip, tail: :fin } ]
+                      { :wing => :tip, :tail => :fin } ]
       } }
     props = Aduki.to_aduki hsh
     props.should == {
