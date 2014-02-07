@@ -1,4 +1,5 @@
 require "date"
+require "time"
 require "aduki/version"
 
 module Aduki
@@ -34,6 +35,8 @@ module Aduki
       to_typed_hash type.values.first, value
     elsif type == Date
       Date.parse value
+    elsif type == Time
+      Time.parse value
     else
       type ? type.new(value) : value
     end
