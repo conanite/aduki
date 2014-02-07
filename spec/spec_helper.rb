@@ -7,7 +7,8 @@ end
 
 class Contraption
   include Aduki::Initializer
-  attr_accessor :x, :y
+  attr_accessor :x, :y, :planned
+  aduki :planned => Date
 end
 
 class Assembly
@@ -42,4 +43,3 @@ class Model
   aduki :machines => Machine
   aduki :contraptions => Contraption
 end
-

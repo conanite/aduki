@@ -170,7 +170,7 @@ describe Aduki::Initializer do
       "machines[1].assemblies[0].name"   => "second machine, second assembly",
       "machines[1].assemblies[0].colour" => "turquoise",
       "machines[1].assemblies[0].size"   => "large-ish",
-      "machines[1].assemblies[1].name"   => "second machine, first assembly",  # the array index orders items but the position is not respected
+      "machines[1].assemblies[1].name"   => "second machine, first assembly",
       "machines[1].assemblies[1].colour" => "purple",
       "machines[1].assemblies[1].size"   => "pretty small",
       "machines[1].assemblies[2].name"   => "second machine, third assembly",

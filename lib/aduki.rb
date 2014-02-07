@@ -1,3 +1,4 @@
+require "date"
 require "aduki/version"
 
 module Aduki
@@ -31,6 +32,8 @@ module Aduki
     type = klass.aduki_type_for_attribute_name setter
     if type.is_a? Hash
       to_typed_hash type.values.first, value
+    elsif type == Date
+      Date.parse value
     else
       type ? type.new(value) : value
     end
