@@ -103,7 +103,7 @@ module Aduki
   end
 
   module Initializer
-    def initialize attrs
+    def initialize attrs={ }
       Aduki.apply_attributes self, attrs
     end
 
