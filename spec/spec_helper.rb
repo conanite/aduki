@@ -13,7 +13,8 @@ end
 
 class Assembly
   include Aduki::Initializer
-  attr_accessor :name, :colour, :size
+  attr_accessor :name, :colour, :size, :height, :weight
+  aduki :height => Integer, :weight => Float
 end
 
 class MachineBuilder

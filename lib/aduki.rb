@@ -37,6 +37,10 @@ module Aduki
       Date.parse value
     elsif type == Time
       Time.parse value
+    elsif type && (type <= Integer)
+      value.to_i
+    elsif type && (type <= Float)
+      value.to_f
     else
       type ? type.new(value) : value
     end
