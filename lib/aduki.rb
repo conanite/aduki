@@ -30,6 +30,8 @@ module Aduki
   end
 
   def self.to_value klass, setter, value
+    return value.map { |v| to_value klass, setter, v} if value.is_a? Array
+
     type = klass.aduki_type_for_attribute_name setter
     if type.is_a? Hash
       to_typed_hash type.values.first, value
