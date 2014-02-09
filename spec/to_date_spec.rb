@@ -28,7 +28,6 @@ describe Aduki::Initializer do
     contraption = Contraption.new props
 
     expect(contraption.updated).to be_a Time
-    puts contraption.updated.inspect
     expect(contraption.updated.year).to eq 1945
     expect(contraption.updated.month).to eq 1
     expect(contraption.updated.day).to eq 19
