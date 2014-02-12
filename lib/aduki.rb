@@ -43,6 +43,8 @@ module Aduki
       value.to_i
     elsif type && (type <= Float)
       value.to_f
+    elsif type.respond_to? :aduki_find
+      type.aduki_find value
     else
       type ? type.new(value) : value
     end

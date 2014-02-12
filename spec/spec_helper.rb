@@ -5,6 +5,20 @@ RSpec.configure do |config|
   config.order = 'random'
 end
 
+
+CITIES = { }
+
+class City < Struct.new(:name)
+  def self.aduki_find value
+    CITIES[value]
+  end
+end
+
+CITIES["paris"]     = City.new "Paris"
+CITIES["madrid"]    = City.new "Madrid"
+CITIES["stockholm"] = City.new "Stockholm"
+CITIES["dublin"]    = City.new "Dublin"
+
 class Contraption
   include Aduki::Initializer
   attr_accessor :x, :y, :planned, :updated
@@ -19,7 +33,8 @@ end
 
 class MachineBuilder
   include Aduki::Initializer
-  attr_accessor :name, :email, :phone, :office
+  attr_accessor :name, :email, :phone, :office, :city
+  aduki :city => City
 end
 
 class Gadget
