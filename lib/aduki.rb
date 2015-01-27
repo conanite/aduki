@@ -29,6 +29,11 @@ module Aduki
     collector
   end
 
+  def self.maybe_parse_date str
+    return nil if (str == nil) || (str == '')
+    Date.parse(str)
+  end
+
   def self.to_value klass, setter, value
     return value.map { |v| to_value klass, setter, v} if value.is_a? Array
 
@@ -36,9 +41,15 @@ module Aduki
     if type.is_a? Hash
       to_typed_hash type.values.first, value
     elsif type == Date
-      Date.parse value
+      case value
+      when Date; value
+      when String; maybe_parse_date(value)
+      end
     elsif type == Time
-      Time.parse value
+      case value
+      when Time; value
+      when String; Time.parse(value)
+      end
     elsif type && (type <= Integer)
       value.to_i
     elsif type && (type <= Float)
@@ -73,22 +84,40 @@ module Aduki
     setters
   end
 
+  def self.apply_array_attribute klass, object, getter, value
+    setter_method = "#{getter}=".to_sym
+    return unless object.respond_to? setter_method
+
+    array = object.send getter
+    if array == nil
+      array = []
+      object.send(setter_method, array)
+    end
+    array << to_value(klass, getter, value)
+  end
+
+  def self.apply_single_attribute klass, object, setter, value
+    setter_method = "#{setter}=".to_sym
+    return unless object.respond_to? setter_method
+
+    object.send setter_method, to_value(klass, setter, value)
+  end
+
+  def self.apply_attribute klass, object, setter, value
+    if setter.match(/\[\d+\]/)
+      getter = setter.gsub(/\[\d+\]/, '').to_sym
+      apply_array_attribute klass, object, getter, value
+    else
+      apply_single_attribute klass, object, setter, value
+    end
+  end
+
   def self.apply_attributes object, attrs
-    setters = split_attributes attrs
+    setters = split_attributes(attrs || { })
     klass = object.class
 
     setters.sort.each do |setter, value|
-      if setter.match(/\[\d+\]/)
-        setter = setter.gsub(/\[\d+\]/, '')
-        array = object.send setter.to_sym
-        if array == nil
-          array = []
-          object.send("#{setter}=", array)
-        end
-        array << to_value(klass, setter, value)
-      else
-        object.send "#{setter}=", to_value(klass, setter, value)
-      end
+      apply_attribute klass, object, setter, value
     end
   end
 
