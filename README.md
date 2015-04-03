@@ -49,7 +49,7 @@ For a complete example, please see the specs.
     a.colour # => "blue"
     a.size   # => "4"
 
-So far, so unsurprising. Let's tell aduki that @size@ is an integer
+So far, so unsurprising. Let's tell aduki that `size` is an integer
 
     class Machine
 
@@ -110,7 +110,7 @@ However, in this configuration, if you don't specify attributes for the Assembly
     m.name            # => "Guillotine"
     m.assembly        # => nil
 
-You can specify an initializer for @assembly@ thus:
+You can specify an initializer for `assembly` thus:
 
     class Machine
       include Aduki::Initializer
@@ -159,7 +159,7 @@ What if your Machine needs an array of Assembly instances?
     m.assemblies[1].colour # => "green"
     m.assemblies[1].size   # => 48
 
-However, like before, if there are no @assemblies@ declarations in the initializer parameter, the @assemblies@ attribute will be nil:
+However, like before, if there are no `assemblies` declarations in the initializer parameter, the `assemblies` attribute will be nil:
 
     props = {
       "name"                 => "Truck",
