@@ -46,7 +46,12 @@ end
 class Gadget
   include Aduki::Initializer
   attr_accessor :name, :price, :supplier
+  attr_writer :wattage
   aduki_initialize :speaker, Speaker
+
+  def watts
+    @wattage
+  end
 end
 
 class Machine

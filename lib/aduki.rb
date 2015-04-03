@@ -96,16 +96,22 @@ module Aduki
     array << to_value(klass, getter, value)
   end
 
-  def self.apply_single_attribute klass, object, setter, value
-    existing_value = object.send setter
-    if existing_value && value.is_a?(Hash)
-      Aduki.apply_attributes existing_value, value
-    else
-      setter_method = "#{setter}=".to_sym
-      return unless object.respond_to? setter_method
+  def self.apply_new_single_attribute klass, object, setter, value
+    setter_method = "#{setter}=".to_sym
+    return unless object.respond_to? setter_method
 
-      object.send setter_method, to_value(klass, setter, value)
+    object.send setter_method, to_value(klass, setter, value)
+  end
+
+  def self.apply_single_attribute klass, object, setter, value
+    if value.is_a?(Hash)
+      existing_value = object.send setter if object.respond_to?(setter)
+      if existing_value
+        Aduki.apply_attributes existing_value, value
+        return
+      end
     end
+    apply_new_single_attribute klass, object, setter, value
   end
 
   def self.apply_attribute klass, object, setter, value
