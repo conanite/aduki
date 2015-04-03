@@ -127,6 +127,11 @@ module Aduki
     def aduki types
       @@types[self] ||= { }
       @@types[self] = @@types[self].merge types
+      types.each do |attr, k|
+        attr = attr.to_sym
+        attr_reader attr unless method_defined? attr
+        attr_writer attr unless method_defined? :"#{attr}="
+      end
     end
 
     def aduki_type_for_attribute_name name
