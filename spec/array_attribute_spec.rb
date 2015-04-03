@@ -2,11 +2,11 @@ require "aduki"
 require "spec_helper"
 
 describe Aduki::Initializer do
-
-  it "should assign an integer attribute" do
+  it "should assign an integer attribute of an object nested in an array attribute" do
     props = {
       "name"         => "Foo",
-      "assemblies"   => [{ "name" => "A0", "height" => "10" }, { "name" => "A1", "height" => "20" }, { "name" => "A2", "height" => "30" }, ]
+      "assemblies"   => [{ "name" => "A0", "height" => "10" }, { "name" => "A1", "height" => "20" }, { "name" => "A2", "height" => "30" }, ],
+      "dimensions"   => [{ x: 1, y: 2, z: 34.5}, { x: 17, y: 23, z: 34.5}, ]
     }
 
     machine = Machine.new props
@@ -21,5 +21,13 @@ describe Aduki::Initializer do
 
     expect(machine.assemblies[2].name).to eq "A2"
     expect(machine.assemblies[2].height).to eq 30
+
+    expect(machine.dimensions[0][:x]).to eq 1
+    expect(machine.dimensions[0][:y]).to eq 2
+    expect(machine.dimensions[0][:z]).to eq 34.5
+
+    expect(machine.dimensions[1][:x]).to eq 17
+    expect(machine.dimensions[1][:y]).to eq 23
+    expect(machine.dimensions[1][:z]).to eq 34.5
   end
 end
