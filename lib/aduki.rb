@@ -123,6 +123,7 @@ module Aduki
 
   module ClassMethods
     @@types = { }
+    @@initializers = { }
 
     def aduki types
       @@types[self] ||= { }
@@ -134,14 +135,29 @@ module Aduki
       end
     end
 
+    def aduki_initialize name, klass
+      aduki name => klass
+      initializer_name = :"aduki_initialize_#{name}"
+      define_method initializer_name do
+        send :"#{name}=", klass.new
+      end
+      @@initializers[self] ||= []
+      @@initializers[self] << initializer_name
+    end
+
     def aduki_type_for_attribute_name name
       hsh = @@types[self]
       hsh ? hsh[name.to_sym] : nil
+    end
+
+    def get_aduki_initializers
+      @@initializers[self] || []
     end
   end
 
   module Initializer
     def initialize attrs={ }
+      self.class.get_aduki_initializers.each { |initializer| send initializer }
       Aduki.apply_attributes self, attrs
     end
 

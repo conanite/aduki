@@ -3,88 +3,90 @@ require "spec_helper"
 
 describe Aduki::Initializer do
 
+  PROPS = {
+    "name"            => "Willy",
+    "email"           => "willy@wonka.softify.com",
+    "item"            => "HXB5H",
+    "thing"           => "0",
+    "gadget.name"     => "My Big Gadget",
+    "gadget.price"    => "21",
+    "gadget.supplier" => "Apple, Inc.",
+    "machines[0].name" => "The First Machine",
+    "machines[0].weight" => "88",
+    "machines[0].speed" => "142",
+    "machines[0].builder.name"   => "The First Machine Builder",
+    "machines[0].builder.email"  => "wibble@bump",
+    "machines[0].builder.phone"  => "4099",
+    "machines[0].builder.office" => "2nd floor room 12",
+    "machines[0].assemblies[0].name"   => "first machine, first assembly", # the array index orders items without respecting the exact position
+    "machines[0].assemblies[1].name"   => "first machine, second assembly",
+    "machines[0].assemblies[2].name"   => "first machine, third assembly",
+    "machines[0].assemblies[0].colour" => "red",
+    "machines[0].assemblies[1].colour" => "green",
+    "machines[0].assemblies[2].colour" => "blue",
+    "machines[0].assemblies[0].size"   => "pretty large",
+    "machines[0].assemblies[1].size"   => "sort of medium",
+    "machines[0].assemblies[2].size"   => "miniscule",
+    "machines[0].dimensions[0]"   => "2346.56",
+    "machines[0].dimensions[1]"   => "6456.64",
+    "machines[0].dimensions[2]"   => "3859.39",
+    "machines[0].dimensions[3]"   => "2365.68",
+    "machines[0].team.lead"       => "Shakespeare", # there is no class definition for #team, so Aduki will apply a hash with properties #lead, #code, #design
+    "machines[0].team.code"       => "Chaucer",
+    "machines[0].team.design"     => "Jobs",
+    "machines[0].helpers.jim.name"   => "Jim Appleby",
+    "machines[0].helpers.jim.email"  => "Jim.Appleby@example.com",
+    "machines[0].helpers.jim.phone"  => "123 456 789",
+    "machines[0].helpers.jim.office" => "Elephant & Castle",
+    "machines[0].helpers.ben.name"   => "Ben Barnes",
+    "machines[0].helpers.ben.email"  => "Ben.Barnes@example.com",
+    "machines[0].helpers.ben.phone"  => "123 456 790",
+    "machines[0].helpers.ben.office" => "Cockney",
+    "machines[0].helpers.pat.name"   => "Patrick O'Brien",
+    "machines[0].helpers.pat.email"  => "Patrick.O.Brien@example.com",
+    "machines[0].helpers.pat.phone"  => "123 456 791",
+    "machines[0].helpers.pat.office" => "Hammersmith",
+    "machines[1].name"           => "The Second Machine",
+    "machines[1].weight"         => "34",
+    "machines[1].speed"          => "289",
+    "machines[1].builder.name"   => "The Second Machine Builder",
+    "machines[1].builder.email"  => "waggie@bump",
+    "machines[1].builder.phone"  => "4101",
+    "machines[1].builder.office" => "3rd floor room 23",
+    "machines[1].assemblies[98].name"   => "second machine, first assembly",  # the array index orders items but the position is not respected
+    "machines[1].assemblies[98].colour" => "purple",
+    "machines[1].assemblies[98].size"   => "pretty small",
+    "machines[1].assemblies[1].name"   => "second machine, second assembly",
+    "machines[1].assemblies[1].colour" => "turquoise",
+    "machines[1].assemblies[1].size"   => "large-ish",
+    "machines[1].assemblies[99].name"   => "second machine, third assembly",
+    "machines[1].assemblies[99].colour" => "magenta",
+    "machines[1].assemblies[99].size"   => "gigantic",
+    "machines[1].dimensions[20]"   => "1985.85",
+    "machines[1].dimensions[30]"   => "7234.92",
+    "machines[1].dimensions[40]"   => "9725.52",
+    "machines[1].dimensions[50]"   => "3579.79",
+    "machines[1].team.lead"       => "Joyce",
+    "machines[1].team.code"       => "O'Brien",
+    "machines[1].team.design"     => "Moore",
+    "machines[1].team.muffins"    => "MacNamara",
+    "contraptions[0].x"          => "19",
+    "contraptions[0].y"          => "0.003",
+    "contraptions[1].x"          => "12",
+    "contraptions[1].y"          => "0.0012",
+    "contraptions[2].x"          => "24",
+    "contraptions[2].y"          => "0.00063",
+    "contraptions[3].x"          => "16",
+    "contraptions[3].y"          => "0.00091",
+    "countries[0]"               => "France",
+    "countries[1]"               => "Sweden",
+    "countries[2]"               => "Germany",
+    "countries[3]"               => "Ireland",
+    "countries[4]"               => "Spain",
+  }
+
   it "should set a bunch of properties from a hash of property paths" do
-    props = {
-      "name"            => "Willy",
-      "email"           => "willy@wonka.softify.com",
-      "item"            => "HXB5H",
-      "thing"           => "0",
-      "gadget.name"     => "My Big Gadget",
-      "gadget.price"    => "21",
-      "gadget.supplier" => "Apple, Inc.",
-      "machines[0].name" => "The First Machine",
-      "machines[0].weight" => "88",
-      "machines[0].speed" => "142",
-      "machines[0].builder.name"   => "The First Machine Builder",
-      "machines[0].builder.email"  => "wibble@bump",
-      "machines[0].builder.phone"  => "4099",
-      "machines[0].builder.office" => "2nd floor room 12",
-      "machines[0].assemblies[0].name"   => "first machine, first assembly", # the array index distinguishes items but does not order them
-      "machines[0].assemblies[1].name"   => "first machine, second assembly",
-      "machines[0].assemblies[2].name"   => "first machine, third assembly",
-      "machines[0].assemblies[0].colour" => "red",
-      "machines[0].assemblies[1].colour" => "green",
-      "machines[0].assemblies[2].colour" => "blue",
-      "machines[0].assemblies[0].size"   => "pretty large",
-      "machines[0].assemblies[1].size"   => "sort of medium",
-      "machines[0].assemblies[2].size"   => "miniscule",
-      "machines[0].dimensions[0]"   => "2346.56",
-      "machines[0].dimensions[1]"   => "6456.64",
-      "machines[0].dimensions[2]"   => "3859.39",
-      "machines[0].dimensions[3]"   => "2365.68",
-      "machines[0].team.lead"       => "Shakespeare", # there is no class definition for #team, so Aduki will apply a hash with properties #lead, #code, #design
-      "machines[0].team.code"       => "Chaucer",
-      "machines[0].team.design"     => "Jobs",
-      "machines[0].helpers.jim.name"   => "Jim Appleby",
-      "machines[0].helpers.jim.email"  => "Jim.Appleby@example.com",
-      "machines[0].helpers.jim.phone"  => "123 456 789",
-      "machines[0].helpers.jim.office" => "Elephant & Castle",
-      "machines[0].helpers.ben.name"   => "Ben Barnes",
-      "machines[0].helpers.ben.email"  => "Ben.Barnes@example.com",
-      "machines[0].helpers.ben.phone"  => "123 456 790",
-      "machines[0].helpers.ben.office" => "Cockney",
-      "machines[0].helpers.pat.name"   => "Patrick O'Brien",
-      "machines[0].helpers.pat.email"  => "Patrick.O.Brien@example.com",
-      "machines[0].helpers.pat.phone"  => "123 456 791",
-      "machines[0].helpers.pat.office" => "Hammersmith",
-      "machines[1].name"           => "The Second Machine",
-      "machines[1].weight"         => "34",
-      "machines[1].speed"          => "289",
-      "machines[1].builder.name"   => "The Second Machine Builder",
-      "machines[1].builder.email"  => "waggie@bump",
-      "machines[1].builder.phone"  => "4101",
-      "machines[1].builder.office" => "3rd floor room 23",
-      "machines[1].assemblies[98].name"   => "second machine, first assembly",  # the array index orders items but the position is not respected
-      "machines[1].assemblies[98].colour" => "purple",
-      "machines[1].assemblies[98].size"   => "pretty small",
-      "machines[1].assemblies[1].name"   => "second machine, second assembly",
-      "machines[1].assemblies[1].colour" => "turquoise",
-      "machines[1].assemblies[1].size"   => "large-ish",
-      "machines[1].assemblies[99].name"   => "second machine, third assembly",
-      "machines[1].assemblies[99].colour" => "magenta",
-      "machines[1].assemblies[99].size"   => "gigantic",
-      "machines[1].dimensions[20]"   => "1985.85",
-      "machines[1].dimensions[30]"   => "7234.92",
-      "machines[1].dimensions[40]"   => "9725.52",
-      "machines[1].dimensions[50]"   => "3579.79",
-      "machines[1].team.lead"       => "Joyce",
-      "machines[1].team.code"       => "O'Brien",
-      "machines[1].team.design"     => "Moore",
-      "machines[1].team.muffins"    => "MacNamara",
-      "contraptions[0].x"          => "19",
-      "contraptions[0].y"          => "0.003",
-      "contraptions[1].x"          => "12",
-      "contraptions[1].y"          => "0.0012",
-      "contraptions[2].x"          => "24",
-      "contraptions[2].y"          => "0.00063",
-      "contraptions[3].x"          => "16",
-      "contraptions[3].y"          => "0.00091",
-      "countries[0]"               => "France",
-      "countries[1]"               => "Sweden",
-      "countries[2]"               => "Germany",
-      "countries[3]"               => "Ireland",
-      "countries[4]"               => "Spain",
-    }
+    props = PROPS
 
     model = Model.new props
 
@@ -95,6 +97,8 @@ describe Aduki::Initializer do
     model.gadget.name.should == "My Big Gadget"
     model.gadget.price.should == "21"
     model.gadget.supplier.should == "Apple, Inc."
+    model.gadget.speaker.should be_a Speaker
+    model.gadget.speaker.ohms.should == nil
     model.machines[0].name.should == "The First Machine"
     model.machines[0].weight.should == "88"
     model.machines[0].speed.should == "142"
@@ -167,20 +171,20 @@ describe Aduki::Initializer do
     model.countries[4].should == "Spain"
 
     sensibly_indexed_props = props.merge({
-      "machines[1].assemblies[0].name"   => "second machine, second assembly",
-      "machines[1].assemblies[0].colour" => "turquoise",
-      "machines[1].assemblies[0].size"   => "large-ish",
-      "machines[1].assemblies[1].name"   => "second machine, first assembly",
-      "machines[1].assemblies[1].colour" => "purple",
-      "machines[1].assemblies[1].size"   => "pretty small",
-      "machines[1].assemblies[2].name"   => "second machine, third assembly",
-      "machines[1].assemblies[2].colour" => "magenta",
-      "machines[1].assemblies[2].size"   => "gigantic",
-      "machines[1].dimensions[0]"   => "1985.85",
-      "machines[1].dimensions[1]"   => "7234.92",
-      "machines[1].dimensions[2]"   => "9725.52",
-      "machines[1].dimensions[3]"   => "3579.79",
-    })
+                                           "machines[1].assemblies[0].name"   => "second machine, second assembly",
+                                           "machines[1].assemblies[0].colour" => "turquoise",
+                                           "machines[1].assemblies[0].size"   => "large-ish",
+                                           "machines[1].assemblies[1].name"   => "second machine, first assembly",
+                                           "machines[1].assemblies[1].colour" => "purple",
+                                           "machines[1].assemblies[1].size"   => "pretty small",
+                                           "machines[1].assemblies[2].name"   => "second machine, third assembly",
+                                           "machines[1].assemblies[2].colour" => "magenta",
+                                           "machines[1].assemblies[2].size"   => "gigantic",
+                                           "machines[1].dimensions[0]"   => "1985.85",
+                                           "machines[1].dimensions[1]"   => "7234.92",
+                                           "machines[1].dimensions[2]"   => "9725.52",
+                                           "machines[1].dimensions[3]"   => "3579.79",
+                                         })
 
     silly_keys = [ "machines[1].assemblies[98].name",
                    "machines[1].assemblies[98].colour",
@@ -196,5 +200,20 @@ describe Aduki::Initializer do
     silly_keys.each { |k| sensibly_indexed_props.delete k }
 
     Aduki.to_aduki(model).should == sensibly_indexed_props
+  end
+
+  it "should initialize attributes of pre-initialized nested objects" do
+    props = {
+      "name"                => "Brackish Water",
+      "gadget.name"         => "The Loud Gadget",
+      "gadget.speaker.ohms" => "29"
+    }
+
+    model = Model.new props
+
+    model.name.should == "Brackish Water"
+    model.gadget.name.should == "The Loud Gadget"
+    model.gadget.speaker.should be_a Speaker
+    model.gadget.speaker.ohms.should == "29"
   end
 end

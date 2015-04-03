@@ -38,9 +38,15 @@ class MachineBuilder
   aduki :city => City
 end
 
+class Speaker
+  include Aduki::Initializer
+  attr_accessor :ohms, :diameter
+end
+
 class Gadget
   include Aduki::Initializer
   attr_accessor :name, :price, :supplier
+  aduki_initialize :speaker, Speaker
 end
 
 class Machine
