@@ -49,9 +49,10 @@ end
 
 class Gadget
   include Aduki::Initializer
-  attr_accessor :name, :price, :supplier
+  attr_accessor :name, :price, :supplier, :variables
   attr_writer :wattage
   aduki_initialize :speaker, Speaker
+  aduki_initialize :variables, Hash, nil
 
   def watts
     @wattage

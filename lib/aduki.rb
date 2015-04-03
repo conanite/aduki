@@ -107,7 +107,11 @@ module Aduki
     if value.is_a?(Hash)
       existing_value = object.send setter if object.respond_to?(setter)
       if existing_value
-        Aduki.apply_attributes existing_value, value
+        if existing_value.is_a? Hash
+          existing_value.merge! value
+        else
+          Aduki.apply_attributes existing_value, value
+        end
         return
       end
     end
