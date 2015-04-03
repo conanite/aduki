@@ -34,49 +34,159 @@ Or install it yourself as:
 
 ## Usage
 
-For a complete example, please see the spec. It's a single file.
+For a complete example, please see the specs.
 
-Here's an abbreviated version:
+#### Initializing attributes
 
     class Assembly
       include Aduki::Initializer
       attr_accessor :name, :colour, :size
     end
 
+    a = Assembly.new name: "Cooker", colour: "blue", size: "4"
+
+    a.name   # => "Cooker"
+    a.colour # => "blue"
+    a.size   # => "4"
+
+So far, so unsurprising. Let's tell aduki that @size@ is an integer
+
+    class Machine
+
+    class Assembly
+      include Aduki::Initializer
+      attr_accessor :name, :colour
+      aduki size: Integer
+    end
+
+    a = Assembly.new name: "Cooker", colour: "blue", size: "4"
+
+    a.name   # => "Cooker"
+    a.colour # => "blue"
+    a.size   # => 4
+
+Yay!
+
+#### Nested object types
+
+Suppose you have a Machine that uses an Assembly instance
+
     class Machine
       include Aduki::Initializer
-      attr_accessor :name, :weight, :speed, :builder, :team
-      attr_accessor :assemblies, :dimensions
-      aduki :assemblies => Assembly, :builder => MachineBuilder
-      aduki :helpers => { :key => MachineBuilder }
+      attr_accessor :name, :speed
+      aduki :assembly => Assembly
     end
 
-    class Model
+    class Assembly
       include Aduki::Initializer
-
-      attr_accessor :name, :email, :item, :thing, :gadget
-      attr_accessor :machines, :contraptions, :countries
-      aduki :gadget => Gadget, :machines => Machine, :contraptions => Contraption
+      attr_accessor :name, :colour
+      aduki size: Integer
     end
 
+    props = {
+      "name"            => "Guillotine",
+      "speed"           => "fast",
+      "assembly.name"   => "blade",
+      "assembly.colour" => "steely-blue",
+      "assembly.size"   => "12",
+    }
 
-Aduki::Initializer adds an #initialize instance method that knows how to read a hash of properties and apply them, much like ActiveRecord::Base,
-with one major difference: Aduki splits property names on "." and applies the hash recursively. Aduki also pays special attention to "[]" in property
-names, initializing an array of items instead of an item directly. Aduki uses the array index inside "[]" to distinguish elements, but not to order them.
+    m = Machine.new props
 
-The #aduki class method allows you identify which types to initialise for each field. When a type is not specified for a field, aduki sets the given value directly.
+    m.name            # => "Guillotine"
+    m.assembly.name   # => "blade"
+    m.assembly.colour # => "steely-blue"
+    m.assembly.size   # => 12
 
-    aduki :gadget => Gadget, :machines => Machine, :contraptions => Contraption
+However, in this configuration, if you don't specify attributes for the Assembly, it will be nil:
 
-This line instructs aduki to initialise the #gadget field with a Gadget object. It also instructs aduki to initialize each element of the #machines
-array with a Machine object. Aduki decides to create an object or an array of objects depending on the attributes-hash contents, rather than on any
-metadata you may specify here.
+    props = {
+      "name"            => "Guillotine",
+      "speed"           => "fast",
+    }
+
+    m = Machine.new props
+
+    m.name            # => "Guillotine"
+    m.assembly        # => nil
+
+You can specify an initializer for @assembly@ thus:
+
+    class Machine
+      include Aduki::Initializer
+      attr_accessor :name, :speed
+      aduki_initialize :assembly, Assembly
+    end
+
+    props = {
+      "name"            => "Guillotine",
+      "speed"           => "fast",
+    }
+
+    m = Machine.new props
+
+    m.name            # => "Guillotine"
+    m.assembly.name   # => nil
 
 
-The following line tells aduki to expect a hash for the #helpers attribute, and for each value in the hash is should construct a new MachineBuilder instance:
+#### Nested array types
 
-      aduki :helpers => { :key => MachineBuilder }
+What if your Machine needs an array of Assembly instances?
 
+    class Machine
+      include Aduki::Initializer
+      attr_accessor :name, :speed
+      aduki :assemblies => Assembly
+    end
+
+    props = {
+      "name"                 => "Truck",
+      "assemblies[0].name"   => "cabin",
+      "assemblies[0].colour" => "orange",
+      "assemblies[0].size"   => "12",
+      "assemblies[1].name"   => "trailer",
+      "assemblies[1].colour" => "green",
+      "assemblies[1].size"   => "48",
+    }
+
+    m = Machine.new props
+
+    m.name                 # => "Truck"
+    m.assemblies[0].name   # => "cabin"
+    m.assemblies[0].colour # => "orange"
+    m.assemblies[0].size   # => 12
+    m.assemblies[1].name   # => "trailer"
+    m.assemblies[1].colour # => "green"
+    m.assemblies[1].size   # => 48
+
+However, like before, if there are no @assemblies@ declarations in the initializer parameter, the @assemblies@ attribute will be nil:
+
+    props = {
+      "name"                 => "Truck",
+    }
+
+    m = Machine.new props
+
+    m.name         # => "Truck"
+    m.assemblies   # => nil
+
+
+If you want to be sure to always have an array, even empty, do this:
+
+    class Machine
+      include Aduki::Initializer
+      attr_accessor :name, :speed
+      aduki_initialize :assemblies, Array, Assembly
+    end
+
+    props = {
+      "name"                 => "Truck",
+    }
+
+    m = Machine.new props
+
+    m.name         # => "Truck"
+    m.assemblies   # => []
 
 
 ## Contributing
