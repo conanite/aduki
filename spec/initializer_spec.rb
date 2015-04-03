@@ -221,4 +221,34 @@ describe Aduki::Initializer do
 
     expect(model.gadget.speaker.dates).to eq [ Date.parse("2015-03-12"), Date.parse("2015-06-08"), Date.parse("2015-06-21") ]
   end
+
+  it "should handle pre-initialized arrays without a given array type" do
+    props = {
+      "name"                => "Brackish Water",
+      "gadget.name"         => "The Loud Gadget",
+      "gadget.speaker.ohms" => "29",
+      "gadget.speaker.dimensions[1]" => "12",
+      "gadget.speaker.dimensions[2]" => "8",
+      "gadget.speaker.dimensions[3]" => "21",
+    }
+
+    model = Model.new props
+
+    expect(model.gadget.speaker.dimensions).to eq [ "12", "8", "21" ]
+  end
+
+  it "should handle pre-initialized arrays with a previously-set array type" do
+    props = {
+      "name"                => "Brackish Water",
+      "gadget.name"         => "The Loud Gadget",
+      "gadget.speaker.ohms" => "29",
+      "gadget.speaker.threads[1]" => "12.4",
+      "gadget.speaker.threads[2]" => "8.16",
+      "gadget.speaker.threads[3]" => "21.42",
+    }
+
+    model = Model.new props
+
+    expect(model.gadget.speaker.threads).to eq [ 12.4, 8.16, 21.42 ]
+  end
 end

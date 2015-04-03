@@ -40,8 +40,11 @@ end
 
 class Speaker
   include Aduki::Initializer
-  attr_accessor :ohms, :diameter
+  attr_accessor :ohms, :diameter, :dimensions
+  aduki threads: Float
   aduki_initialize :dates, Array, Date
+  aduki_initialize :dimensions, Array, nil
+  aduki_initialize :threads, Array, nil
 end
 
 class Gadget
