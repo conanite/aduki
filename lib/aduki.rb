@@ -97,10 +97,15 @@ module Aduki
   end
 
   def self.apply_single_attribute klass, object, setter, value
-    setter_method = "#{setter}=".to_sym
-    return unless object.respond_to? setter_method
+    existing_value = object.send setter
+    if existing_value && value.is_a?(Hash)
+      Aduki.apply_attributes existing_value, value
+    else
+      setter_method = "#{setter}=".to_sym
+      return unless object.respond_to? setter_method
 
-    object.send setter_method, to_value(klass, setter, value)
+      object.send setter_method, to_value(klass, setter, value)
+    end
   end
 
   def self.apply_attribute klass, object, setter, value
