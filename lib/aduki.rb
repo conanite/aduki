@@ -146,11 +146,12 @@ module Aduki
       end
     end
 
-    def aduki_initialize name, klass
-      aduki name => klass
+    def aduki_initialize name, initial_klass, type=:notset
+      type = (type == :notset) ? initial_klass : type
+      aduki(name => type) if type
       initializer_name = :"aduki_initialize_#{name}"
       define_method initializer_name do
-        send :"#{name}=", klass.new
+        send :"#{name}=", initial_klass.new
       end
       @@initializers[self] ||= []
       @@initializers[self] << initializer_name

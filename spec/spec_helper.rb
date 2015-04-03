@@ -41,6 +41,7 @@ end
 class Speaker
   include Aduki::Initializer
   attr_accessor :ohms, :diameter
+  aduki_initialize :dates, Array, Date
 end
 
 class Gadget

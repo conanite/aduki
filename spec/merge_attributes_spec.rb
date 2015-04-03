@@ -6,7 +6,10 @@ describe Aduki::Initializer do
     props = {
       "name"                => "Brackish Water",
       "gadget.name"         => "The Loud Gadget",
-      "gadget.speaker.ohms" => "29"
+      "gadget.speaker.ohms" => "29",
+      "gadget.speaker.dates[1]" => "2014-03-12",
+      "gadget.speaker.dates[2]" => "2014-06-08",
+      "gadget.speaker.dates[3]" => "2014-06-21",
     }
 
     model = Model.new props
@@ -16,11 +19,15 @@ describe Aduki::Initializer do
     expect(model.gadget.price).           to eq nil
     expect(model.gadget.speaker.ohms).    to eq "29"
     expect(model.gadget.speaker.diameter).to eq nil
+    expect(model.gadget.speaker.dates).to eq [ Date.parse("2014-03-12"), Date.parse("2014-06-08"), Date.parse("2014-06-21") ]
 
     more_props = {
       "name"                    => "Smelly Brackish Water",
       "gadget.price"            => "42",
-      "gadget.speaker.diameter" => "large"
+      "gadget.speaker.diameter" => "large",
+      "gadget.speaker.dates[1]" => "2015-06-21",
+      "gadget.speaker.dates[2]" => "2015-03-12",
+      "gadget.speaker.dates[3]" => "2015-06-08",
     }
 
     Aduki.apply_attributes model, more_props
@@ -30,6 +37,7 @@ describe Aduki::Initializer do
     expect(model.gadget.price).           to eq "42"
     expect(model.gadget.speaker.ohms).    to eq "29"
     expect(model.gadget.speaker.diameter).to eq "large"
+    expect(model.gadget.speaker.dates).to eq [ Date.parse("2014-03-12"), Date.parse("2014-06-08"), Date.parse("2014-06-21"), Date.parse("2015-06-21"), Date.parse("2015-03-12"), Date.parse("2015-06-08") ]
   end
 
   it "does not die when reader accessor is absent" do
