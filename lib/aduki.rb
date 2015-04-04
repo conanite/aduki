@@ -1,6 +1,7 @@
 require "date"
 require "time"
 require "aduki/version"
+require "aduki/recursive_hash"
 
 module Aduki
   def self.to_aduki obj, collector={ }, key="", join=""
@@ -108,7 +109,7 @@ module Aduki
       existing_value = object.send setter if object.respond_to?(setter)
       if existing_value
         if existing_value.is_a? Hash
-          existing_value.merge! value
+          value.each { |k, v| existing_value[k] = v }
         else
           Aduki.apply_attributes existing_value, value
         end

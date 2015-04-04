@@ -83,4 +83,43 @@ describe Aduki::Initializer do
     expect(model.gadget.speaker.ohms).    to eq "29"
     expect(model.gadget.speaker.diameter).to eq "large"
   end
+
+
+  it "merges a hash attribute" do
+    props = {
+      "name"                => "Brackish Water",
+      "gadget.name"         => "The Loud Gadget",
+      "gadget.variables.x" => "29",
+      "gadget.variables.y" => "12.4",
+      "gadget.variables.z" => "8.16",
+    }
+
+    model = Model.new props
+
+    more_props = {
+      "gadget.variables.x.left"     => "strong",
+      "gadget.variables.x.right"    => "central",
+      "gadget.variables.y.left"     => "weak",
+      "gadget.variables.y.right"    => "mirror",
+      "gadget.variables.other"      => "central",
+    }
+
+    Aduki.apply_attributes model, more_props
+
+    expected = {
+      "x"=> {
+        "left"  => "strong",
+        "right" => "central",
+      },
+      "y" => {
+        "left"  => "weak",
+        "right" => "mirror",
+      },
+      "z" => "8.16",
+      "other" => "central"
+    }
+
+    expect(model.gadget.variables).to eq expected
+  end
+
 end

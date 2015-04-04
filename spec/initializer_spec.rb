@@ -252,7 +252,7 @@ describe Aduki::Initializer do
     expect(model.gadget.speaker.threads).to eq [ 12.4, 8.16, 21.42 ]
   end
 
-  it "should handle pre-initialized hashes with a previously-set array type" do
+  it "should handle pre-initialized hashes" do
     props = {
       "name"                => "Brackish Water",
       "gadget.name"         => "The Loud Gadget",
