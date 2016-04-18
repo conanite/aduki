@@ -265,4 +265,105 @@ describe Aduki::Initializer do
 
     expect(model.gadget.variables).to eq({ "x"=> "29", "y" => "12.4", "z" => "8.16"})
   end
+
+  it "should handle pre-initialized hashes with more complex subkeys" do
+    props = {
+      "name"                => "Brackish Water",
+      "gadget.name"         => "The Loud Gadget",
+      "gadget.variables.x[4]" => "24",
+      "gadget.variables.x[7]" => "27",
+      "gadget.variables.x[3].length" => "3",
+      "gadget.variables.x[3].width"  => "13",
+      "gadget.variables.x[3].depth[0]"       => "23",
+      "gadget.variables.x[3].depth[1].high"  => "23+10",
+      "gadget.variables.x[3].depth[1].low"   => "23-10",
+      "gadget.variables.x[3].depth[2]"       => "33",
+      "gadget.variables.y.fortune"   => "flavours",
+      "gadget.variables.y.help"      => "F1",
+      "gadget.variables.y.pandora"   => "boxy",
+      "gadget.variables.z" => "8.16",
+    }
+
+    model = Model.new props
+
+    expected = {
+      "x"=> [
+             nil,
+             nil,
+             nil,
+             {
+               "length" => "3",
+               "width" => "13",
+               "depth" => [
+                           "23",
+                           { "high" => "23+10", "low" => "23-10"},
+                           "33"
+                          ],
+             },
+             "24",
+             nil,
+             nil,
+             "27"
+            ],
+      "y" => {
+        "fortune" => "flavours",
+        "help" => "F1",
+        "pandora" => "boxy"},
+      "z" => "8.16"
+    }
+    expect(model.gadget.variables).to eq expected
+  end
+
+  it "creates a new hash by recursively splitting string keys on separator-character" do
+    props = {
+      "name"                => "Brackish Water",
+      "gadget.name"         => "The Loud Gadget",
+      "gadget.variables.x[4]" => "24",
+      "gadget.variables.x[7]" => "27",
+      "gadget.variables.x[3].length" => "3",
+      "gadget.variables.x[3].width"  => "13",
+      "gadget.variables.x[3].depth[0]"       => "23",
+      "gadget.variables.x[3].depth[1].high"  => "23+10",
+      "gadget.variables.x[3].depth[1].low"   => "23-10",
+      "gadget.variables.x[3].depth[2]"       => "33",
+      "gadget.variables.y.fortune"   => "flavours",
+      "gadget.variables.y.help"      => "F1",
+      "gadget.variables.y.pandora"   => "boxy",
+      "gadget.variables.z" => "8.16",
+    }
+
+    hash = Aduki::RecursiveHash.new.copy props
+    expected = {
+      "name" => "Brackish Water",
+      "gadget" => {
+        "name" => "The Loud Gadget",
+        "variables" => {
+          "x"=> [
+                 nil,
+                 nil,
+                 nil,
+                 {
+                   "length" => "3",
+                   "width" => "13",
+                   "depth" => [
+                               "23",
+                               { "high" => "23+10", "low" => "23-10"},
+                               "33"
+                              ],
+                 },
+                 "24",
+                 nil,
+                 nil,
+                 "27"
+                ],
+          "y" => {
+            "fortune" => "flavours",
+            "help" => "F1",
+            "pandora" => "boxy"},
+          "z" => "8.16"
+        }
+      }
+    }
+    expect(hash).to eq expected
+  end
 end

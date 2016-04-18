@@ -52,7 +52,7 @@ class Gadget
   attr_accessor :name, :price, :supplier, :variables
   attr_writer :wattage
   aduki_initialize :speaker, Speaker
-  aduki_initialize :variables, RecursiveHash, nil
+  aduki_initialize :variables, Aduki::RecursiveHash, nil
 
   def watts
     @wattage
