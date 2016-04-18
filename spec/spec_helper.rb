@@ -45,6 +45,7 @@ class Politician
   attr_accessor :name
   attr_finder :aduki_find, :name, :city
   attr_many_finder :lookup, :name, :gifts
+  attr_many_finder :make?, :ohms, :spks, :class_name => "Speaker"
 end
 
 class Contraption
@@ -73,6 +74,10 @@ class Speaker
   aduki_initialize :dates, Array, Date
   aduki_initialize :dimensions, Array, nil
   aduki_initialize :threads, Array, nil
+
+  def self.make? ohms
+    ohms.is_a?(Integer) ? Speaker.new(ohms: ohms) : ohms.map { |o| make? o }
+  end
 end
 
 class Gadget

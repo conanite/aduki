@@ -89,13 +89,9 @@ module Aduki
   def self.apply_array_attribute klass, object, getter, value
     setter_method = "#{getter}=".to_sym
     return unless object.respond_to? setter_method
-
-    array = object.send getter
-    if array == nil
-      array = []
-      object.send(setter_method, array)
-    end
+    array = object.send(getter) || []
     array << to_value(klass, getter, value)
+    object.send(setter_method, array)
   end
 
   def self.apply_new_single_attribute klass, object, setter, value
@@ -177,7 +173,7 @@ module Aduki
     end
 
     def attr_many_finder finder, id, name, options={ }
-      class_eval Aduki::AttrFinder.one2many_attr_finder_text(finder, id, name, options={ })
+      class_eval Aduki::AttrFinder.one2many_attr_finder_text(finder, id, name, options)
     end
   end
 
