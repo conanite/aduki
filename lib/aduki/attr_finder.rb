@@ -50,6 +50,7 @@ end
 
 def #{name}
   @#{name} ||= #{klass}.#{finder}(@#{id_method}) unless @#{id_method}.nil? || @#{id_method} == ''
+  @#{name}
 end
 
 def #{name}= x
@@ -78,6 +79,7 @@ end
 
 def #{name}
   @#{name} ||= #{klass}.#{finder} @#{id_method} unless @#{id_method}.nil?
+  @#{name}
 end
 
 def #{name}= x
