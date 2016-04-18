@@ -17,10 +17,35 @@ class City < Struct.new(:name)
   end
 end
 
-City.new("paris").register
-City.new("madrid").register
+City.new("paris"    ).register
+City.new("madrid"   ).register
 City.new("stockholm").register
-City.new("dublin").register
+City.new("dublin"   ).register
+
+class Gift
+  GIFTS = { }
+  include Aduki::Initializer
+  attr_accessor :name, :price
+  def self.lookup name
+    name.is_a?(String) ? GIFTS[name] : name.map { |n| GIFTS[n] }
+  end
+  def register
+    GIFTS[name] = self
+  end
+end
+
+Gift.new(name: "dinner"    , price: :cheap    ).register
+Gift.new(name: "massage"   , price: :cheap    ).register
+Gift.new(name: "med_cruise", price: :expensive).register
+Gift.new(name: "whiskey"   , price: :medium   ).register
+Gift.new(name: "cigars"    , price: :medium   ).register
+
+class Politician
+  include Aduki::Initializer
+  attr_accessor :name
+  attr_finder :aduki_find, :name, :city
+  attr_many_finder :lookup, :name, :gifts
+end
 
 class Contraption
   include Aduki::Initializer

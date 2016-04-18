@@ -2,6 +2,7 @@ require "date"
 require "time"
 require "aduki/version"
 require "aduki/recursive_hash"
+require "aduki/attr_finder"
 
 module Aduki
   def self.to_aduki obj, collector={ }, key="", join=""
@@ -169,6 +170,14 @@ module Aduki
 
     def get_aduki_initializers
       @@initializers[self] || []
+    end
+
+    def attr_finder finder, id, *args
+      class_eval Aduki::AttrFinder.attr_finders_text(finder, id, *args)
+    end
+
+    def attr_many_finder finder, id, name, options={ }
+      class_eval Aduki::AttrFinder.one2many_attr_finder_text(finder, id, name, options={ })
     end
   end
 
