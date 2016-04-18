@@ -6,18 +6,21 @@ RSpec.configure do |config|
 end
 
 
-CITIES = { }
-
 class City < Struct.new(:name)
+  CITIES = { }
   def self.aduki_find value
     CITIES[value]
   end
+
+  def register
+    CITIES[name] = self
+  end
 end
 
-CITIES["paris"]     = City.new "Paris"
-CITIES["madrid"]    = City.new "Madrid"
-CITIES["stockholm"] = City.new "Stockholm"
-CITIES["dublin"]    = City.new "Dublin"
+City.new("paris").register
+City.new("madrid").register
+City.new("stockholm").register
+City.new("dublin").register
 
 class Contraption
   include Aduki::Initializer
