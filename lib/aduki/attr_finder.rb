@@ -49,8 +49,7 @@ def #{id_method}= x
 end
 
 def #{name}
-  @#{name} ||= #{klass}.#{finder} @#{id_method} unless @#{id_method}.blank?
-  @#{name}
+  @#{name} ||= #{klass}.#{finder}(@#{id_method}) unless @#{id_method}.nil? || @#{id_method} == ''
 end
 
 def #{name}= x
@@ -79,7 +78,6 @@ end
 
 def #{name}
   @#{name} ||= #{klass}.#{finder} @#{id_method} unless @#{id_method}.nil?
-  @#{name}
 end
 
 def #{name}= x

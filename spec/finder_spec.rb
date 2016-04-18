@@ -19,8 +19,7 @@ def widget_holder_id= x
 end
 
 def widget_holder
-  @widget_holder ||= WidgetHolder.find @widget_holder_id unless @widget_holder_id.blank?
-  @widget_holder
+  @widget_holder ||= WidgetHolder.find(@widget_holder_id) unless @widget_holder_id.nil? || @widget_holder_id == ''
 end
 
 def widget_holder= x
@@ -48,8 +47,7 @@ def happy_hour_time= x
 end
 
 def happy_hour
-  @happy_hour ||= HappyHour.open @happy_hour_time unless @happy_hour_time.blank?
-  @happy_hour
+  @happy_hour ||= HappyHour.open(@happy_hour_time) unless @happy_hour_time.nil? || @happy_hour_time == ''
 end
 
 def happy_hour= x
@@ -70,8 +68,7 @@ def widget_time= x
 end
 
 def widget
-  @widget ||= WidgetHolder::Base.open @widget_time unless @widget_time.blank?
-  @widget
+  @widget ||= WidgetHolder::Base.open(@widget_time) unless @widget_time.nil? || @widget_time == ''
 end
 
 def widget= x
@@ -100,7 +97,6 @@ end
 
 def birthday_gifts
   @birthday_gifts ||= BirthdayGift.purchase @birthday_gift_prices unless @birthday_gift_prices.nil?
-  @birthday_gifts
 end
 
 def birthday_gifts= x
@@ -128,7 +124,6 @@ end
 
 def birthday_gifts
   @birthday_gifts ||= ToyShop.purchase @birthday_gift_prices unless @birthday_gift_prices.nil?
-  @birthday_gifts
 end
 
 def birthday_gifts= x
