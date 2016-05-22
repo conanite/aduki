@@ -22,9 +22,8 @@ City.new("madrid"   ).register
 City.new("stockholm").register
 City.new("dublin"   ).register
 
-class Gift
+class Gift < Aduki::Initializable
   GIFTS = { }
-  include Aduki::Initializer
   attr_accessor :name, :price
   def self.lookup name
     name.is_a?(String) ? GIFTS[name] : name.map { |n| GIFTS[n] }
@@ -40,8 +39,7 @@ Gift.new(name: "med_cruise", price: :expensive).register
 Gift.new(name: "whiskey"   , price: :medium   ).register
 Gift.new(name: "cigars"    , price: :medium   ).register
 
-class Politician
-  include Aduki::Initializer
+class Politician < Aduki::Initializable
   attr_accessor :name
   attr_finder :aduki_find, :name, :city
   attr_many_finder :lookup, :name, :gifts

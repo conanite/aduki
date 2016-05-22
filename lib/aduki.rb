@@ -187,4 +187,7 @@ module Aduki
       base.extend Aduki::ClassMethods
     end
   end
+
+  # inherit from this class as shortcut instead of including Initializer
+  class Initializable ; include Initializer ; end
 end
