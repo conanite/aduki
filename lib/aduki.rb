@@ -40,7 +40,7 @@ module Aduki
     return value.map { |v| to_value klass, setter, v} if value.is_a? Array
 
     type = klass.aduki_type_for_attribute_name setter
-    if type && (value.class <= type)
+    if type && type.is_a?(Class) && (value.class <= type)
       value
     elsif type.is_a? Hash
       to_typed_hash type.values.first, value
