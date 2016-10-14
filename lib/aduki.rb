@@ -181,7 +181,10 @@ module Aduki
     def initialize attrs={ }
       self.class.get_aduki_initializers.each { |initializer| send initializer }
       Aduki.apply_attributes self, attrs
+      aduki_after_initialize
     end
+
+    def aduki_after_initialize ; end
 
     def self.included(base)
       base.extend Aduki::ClassMethods
