@@ -5,6 +5,11 @@ require "aduki/recursive_hash"
 require "aduki/attr_finder"
 
 module Aduki
+  def self.install_monkey_patches
+    require 'core_ext/array'
+    require 'core_ext/hash'
+  end
+
   def self.to_aduki obj, collector={ }, key="", join=""
     case obj
     when Hash

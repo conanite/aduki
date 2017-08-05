@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = "https://github.com/conanite/aduki"
 
 
-  gem.add_development_dependency 'rspec', '~> 2.9'
+  gem.add_development_dependency 'rspec', '~> 3.1'
   gem.add_development_dependency 'rspec_numbering_formatter'
 
   gem.files         = `git ls-files`.split($/)
