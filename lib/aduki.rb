@@ -187,10 +187,11 @@ module Aduki
   module Initializer
     def initialize attrs={ }
       self.class.get_aduki_initializers.each { |initializer| send initializer }
-      Aduki.apply_attributes self, attrs
+      aduki_apply_attributes attrs
       aduki_after_initialize
     end
 
+    def aduki_apply_attributes attrs ; Aduki.apply_attributes self, attrs ; end
     def aduki_after_initialize ; end
 
     def self.included(base)
