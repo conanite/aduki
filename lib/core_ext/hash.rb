@@ -2,6 +2,7 @@ class Hash
   def recursively_delete_keys! *keys_to_delete
     keys_to_delete.each { |k| delete k }
     values.each { |v| v.recursively_delete_keys!(*keys_to_delete) if v.is_a?(Hash) || v.is_a?(Array) }
+    self
   end
 
   def recursively_replace_keys! &block

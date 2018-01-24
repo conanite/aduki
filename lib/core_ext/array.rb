@@ -1,10 +1,10 @@
 class Array
   def recursively_delete_keys! *keys
-    self.each { |v| v.recursively_delete_keys!(*keys) if v.is_a?(Hash) || v.is_a?(Array) }
+    self.each { |v| v.recursively_delete_keys!(*keys) if v.is_a?(Hash) || v.is_a?(Array) } ; self
   end
 
   def recursively_replace_keys! &block
-    self.each { |v| v.recursively_replace_keys!(&block) if v.is_a?(Hash) || v.is_a?(Array) }
+    self.each { |v| v.recursively_replace_keys!(&block) if v.is_a?(Hash) || v.is_a?(Array) } ; self
   end
 
   def recursively_replace_values! &block
