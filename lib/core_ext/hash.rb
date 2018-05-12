@@ -37,7 +37,7 @@ class Hash
 
   def recursively_replace_values &block
     each_with_object({ }) { |(k, v), result|
-      result[k] = (v.is_a?(Hash) || v.is_a?(Array)) ? v.recursively_replace_values!(&block) : yield(k, v)
+      result[k] = (v.is_a?(Hash) || v.is_a?(Array)) ? v.recursively_replace_values(&block) : yield(k, v)
     }
   end
 end
