@@ -7,10 +7,10 @@ class Array
     self.each { |v| v.recursively_replace_keys!(&block) if v.is_a?(Hash) || v.is_a?(Array) } ; self
   end
 
-  def recursively_replace_values! &block
+  def recursively_replace_values &block
     result = []
     each_with_index { |v, i|
-      result << ((v.is_a?(Hash) || v.is_a?(Array)) ? v.recursively_replace_values!(&block) : yield(i, v))
+      result << ((v.is_a?(Hash) || v.is_a?(Array)) ? v.recursively_replace_values(&block) : yield(i, v))
     }
     result
   end
