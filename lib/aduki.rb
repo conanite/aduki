@@ -87,7 +87,7 @@ module Aduki
         setters[first] ||= { }
         setters[first][rest] = value
       else
-        setters[setter] = value
+        setters[setter.to_s] = value
       end
     end
     setters
