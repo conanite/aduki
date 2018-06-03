@@ -53,11 +53,19 @@ module Aduki
       case value
       when Date; value
       when String; maybe_parse_date(value)
+      else
+        if value.respond_to?(:to_date)
+          value.to_date
+        end
       end
     elsif type == Time
       case value
       when Time; value
       when String; Time.parse(value)
+      else
+        if value.respond_to?(:to_time)
+          value.to_time
+        end
       end
     elsif type && (type <= Integer)
       value.to_i
