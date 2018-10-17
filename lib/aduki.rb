@@ -141,6 +141,7 @@ module Aduki
   end
 
   def self.apply_attributes object, attrs
+    attrs = nil if attrs == ''
     setters = split_attributes(attrs || { })
     klass = object.class
 
