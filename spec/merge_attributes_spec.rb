@@ -2,7 +2,7 @@ require "aduki"
 require "spec_helper"
 
 describe Aduki::Initializer do
-  it "should initialize attributes of pre-initialized nested objects" do
+  it "initializes attributes of pre-initialized nested objects" do
     props = {
       "name"                => "Brackish Water",
       "gadget.name"         => "The Loud Gadget",

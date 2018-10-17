@@ -4,7 +4,7 @@ describe Hash do
   before { Aduki.install_monkey_patches }
 
   describe 'recursively_delete_keys!' do
-    it "should delete the specified keys from itself and all nested hashes, even sub-nested in arrays" do
+    it "deletes the specified keys from itself and all nested hashes, even sub-nested in arrays" do
       h = {
         site_id: "foo",
         "site_id" => :bar,
@@ -22,7 +22,7 @@ describe Hash do
 
       h.recursively_delete_keys! :site_id, "site_id"
 
-      h.should == {
+      expect(h).to eq({
         things: {
           2 => [ { a: 12, b: 53 },
                  { a: 13, b: 54 },
@@ -31,12 +31,12 @@ describe Hash do
           toto: :titi
         },
         others: [ { name: "Walter" } ]
-      }
+      })
     end
   end
 
   describe 'recursively_stringify_keys!' do
-    it "should change all keys to strings" do
+    it "changes all keys to strings" do
       h = {
         foo: "bar",
         12 => 13,

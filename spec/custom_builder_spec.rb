@@ -3,7 +3,7 @@ require "spec_helper"
 
 describe Aduki::Initializer do
 
-  it "should assign a value using a custom finder" do
+  it "assigns a value using a custom finder" do
     props = {
       "name"   => "Anna Livia",
       "city"   => "dublin"

@@ -2,7 +2,7 @@ require "aduki"
 require "spec_helper"
 
 describe Aduki::Initializer do
-  it "should assign an integer attribute of an object nested in an array attribute" do
+  it "assigns an integer attribute of an object nested in an array attribute" do
     props = {
       "name"         => "Foo",
       "assemblies"   => [{ "name" => "A0", "height" => "10" }, { "name" => "A1", "height" => "20" }, { "name" => "A2", "height" => "30" }, ],

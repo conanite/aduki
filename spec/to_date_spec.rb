@@ -32,7 +32,7 @@ describe Aduki::Initializer do
     expect(contraption.planned).to eq(Date.today - 64)
   end
 
-  it "should assign a Time attribute" do
+  it "assigns a Time attribute" do
     props = {
       "x" => "The X",
       "y" => "The Y",

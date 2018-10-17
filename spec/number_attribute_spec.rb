@@ -3,7 +3,7 @@ require "spec_helper"
 
 describe Aduki::Initializer do
 
-  it "should assign an integer attribute" do
+  it "assigns an integer attribute" do
     props = {
       "height"   => "123",
       "weight" => "12.345"

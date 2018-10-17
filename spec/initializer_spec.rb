@@ -85,90 +85,90 @@ describe Aduki::Initializer do
     "countries[4]"               => "Spain",
   }
 
-  it "should set a bunch of properties from a hash of property paths" do
+  it "sets a bunch of properties from a hash of property paths" do
     props = PROPS
 
     model = Model.new props
 
-    model.name.should == "Willy"
-    model.email.should == "willy@wonka.softify.com"
-    model.item.should == "HXB5H"
-    model.thing.should == "0"
-    model.gadget.name.should == "My Big Gadget"
-    model.gadget.price.should == "21"
-    model.gadget.supplier.should == "Apple, Inc."
-    model.gadget.speaker.should be_a Speaker
-    model.gadget.speaker.ohms.should == nil
-    model.machines[0].name.should == "The First Machine"
-    model.machines[0].weight.should == "88"
-    model.machines[0].speed.should == "142"
-    model.machines[0].builder.name.should == "The First Machine Builder"
-    model.machines[0].builder.email.should == "wibble@bump"
-    model.machines[0].builder.phone.should == "4099"
-    model.machines[0].builder.office.should == "2nd floor room 12"
-    model.machines[0].assemblies[0].name.should == "first machine, first assembly"
-    model.machines[0].assemblies[0].colour.should == "red"
-    model.machines[0].assemblies[0].size.should == "pretty large"
-    model.machines[0].assemblies[1].name.should == "first machine, second assembly"
-    model.machines[0].assemblies[1].colour.should == "green"
-    model.machines[0].assemblies[1].size.should == "sort of medium"
-    model.machines[0].assemblies[2].name.should == "first machine, third assembly"
-    model.machines[0].assemblies[2].colour.should == "blue"
-    model.machines[0].assemblies[2].size.should == "miniscule"
-    model.machines[0].dimensions[0].should == "2346.56"
-    model.machines[0].dimensions[1].should == "6456.64"
-    model.machines[0].dimensions[2].should == "3859.39"
-    model.machines[0].dimensions[3].should == "2365.68"
-    model.machines[0].team.should == { "lead" => "Shakespeare", "code" => "Chaucer", "design" => "Jobs"}
-    model.machines[0].helpers["jim"].should be_a MachineBuilder
-    model.machines[0].helpers["jim"].name.should == "Jim Appleby"
-    model.machines[0].helpers["jim"].email.should == "Jim.Appleby@example.com"
-    model.machines[0].helpers["jim"].phone.should == "123 456 789"
-    model.machines[0].helpers["jim"].office.should == "Elephant & Castle"
-    model.machines[0].helpers["ben"].should be_a MachineBuilder
-    model.machines[0].helpers["ben"].name.should == "Ben Barnes"
-    model.machines[0].helpers["ben"].email.should == "Ben.Barnes@example.com"
-    model.machines[0].helpers["ben"].phone.should == "123 456 790"
-    model.machines[0].helpers["ben"].office.should == "Cockney"
-    model.machines[0].helpers["pat"].should be_a MachineBuilder
-    model.machines[0].helpers["pat"].name.should == "Patrick O'Brien"
-    model.machines[0].helpers["pat"].email.should == "Patrick.O.Brien@example.com"
-    model.machines[0].helpers["pat"].phone.should == "123 456 791"
-    model.machines[0].helpers["pat"].office.should == "Hammersmith"
-    model.machines[1].name.should == "The Second Machine"
-    model.machines[1].weight.should == "34"
-    model.machines[1].speed.should == "289"
-    model.machines[1].builder.name.should == "The Second Machine Builder"
-    model.machines[1].builder.email.should == "waggie@bump"
-    model.machines[1].builder.phone.should == "4101"
-    model.machines[1].builder.office.should == "3rd floor room 23"
-    model.machines[1].assemblies[0].name.should == "second machine, second assembly"
-    model.machines[1].assemblies[0].colour.should == "turquoise"
-    model.machines[1].assemblies[0].size.should == "large-ish"
-    model.machines[1].assemblies[1].name.should == "second machine, first assembly"
-    model.machines[1].assemblies[1].colour.should == "purple"
-    model.machines[1].assemblies[1].size.should == "pretty small"
-    model.machines[1].assemblies[2].name.should == "second machine, third assembly"
-    model.machines[1].assemblies[2].colour.should == "magenta"
-    model.machines[1].assemblies[2].size.should == "gigantic"
-    model.machines[1].dimensions[0].should == "1985.85"
-    model.machines[1].dimensions[1].should == "7234.92"
-    model.machines[1].dimensions[2].should == "9725.52"
-    model.machines[1].dimensions[3].should == "3579.79"
-    model.machines[1].team.should == { "lead" => "Joyce", "code" => "O'Brien", "design" => "Moore", "muffins" => "MacNamara"}
-    model.contraptions[0].x.should == "19"
-    model.contraptions[0].y.should == "0.003"
-    model.contraptions[1].x.should == "12"
-    model.contraptions[1].y.should == "0.0012"
-    model.contraptions[2].x.should == "24"
-    model.contraptions[2].y.should == "0.00063"
-    model.contraptions[3].x.should == "16"
-    model.contraptions[3].y.should == "0.00091"
-    model.countries[0].should == "France"
-    model.countries[1].should == "Sweden"
-    model.countries[2].should == "Germany"
-    model.countries[3].should == "Ireland"
-    model.countries[4].should == "Spain"
+    expect(model.name).to eq "Willy"
+    expect(model.email).to eq "willy@wonka.softify.com"
+    expect(model.item).to eq "HXB5H"
+    expect(model.thing).to eq "0"
+    expect(model.gadget.name).to eq "My Big Gadget"
+    expect(model.gadget.price).to eq "21"
+    expect(model.gadget.supplier).to eq "Apple, Inc."
+    expect(model.gadget.speaker).to be_a Speaker
+    expect(model.gadget.speaker.ohms).to eq nil
+    expect(model.machines[0].name).to eq "The First Machine"
+    expect(model.machines[0].weight).to eq "88"
+    expect(model.machines[0].speed).to eq "142"
+    expect(model.machines[0].builder.name).to eq "The First Machine Builder"
+    expect(model.machines[0].builder.email).to eq "wibble@bump"
+    expect(model.machines[0].builder.phone).to eq "4099"
+    expect(model.machines[0].builder.office).to eq "2nd floor room 12"
+    expect(model.machines[0].assemblies[0].name).to eq "first machine, first assembly"
+    expect(model.machines[0].assemblies[0].colour).to eq "red"
+    expect(model.machines[0].assemblies[0].size).to eq "pretty large"
+    expect(model.machines[0].assemblies[1].name).to eq "first machine, second assembly"
+    expect(model.machines[0].assemblies[1].colour).to eq "green"
+    expect(model.machines[0].assemblies[1].size).to eq "sort of medium"
+    expect(model.machines[0].assemblies[2].name).to eq "first machine, third assembly"
+    expect(model.machines[0].assemblies[2].colour).to eq "blue"
+    expect(model.machines[0].assemblies[2].size).to eq "miniscule"
+    expect(model.machines[0].dimensions[0]).to eq "2346.56"
+    expect(model.machines[0].dimensions[1]).to eq "6456.64"
+    expect(model.machines[0].dimensions[2]).to eq "3859.39"
+    expect(model.machines[0].dimensions[3]).to eq "2365.68"
+    expect(model.machines[0].team).to eq({ "lead" => "Shakespeare", "code" => "Chaucer", "design" => "Jobs"})
+    expect(model.machines[0].helpers["jim"]).to be_a MachineBuilder
+    expect(model.machines[0].helpers["jim"].name).to eq "Jim Appleby"
+    expect(model.machines[0].helpers["jim"].email).to eq "Jim.Appleby@example.com"
+    expect(model.machines[0].helpers["jim"].phone).to eq "123 456 789"
+    expect(model.machines[0].helpers["jim"].office).to eq "Elephant & Castle"
+    expect(model.machines[0].helpers["ben"]).to be_a MachineBuilder
+    expect(model.machines[0].helpers["ben"].name).to eq "Ben Barnes"
+    expect(model.machines[0].helpers["ben"].email).to eq "Ben.Barnes@example.com"
+    expect(model.machines[0].helpers["ben"].phone).to eq "123 456 790"
+    expect(model.machines[0].helpers["ben"].office).to eq "Cockney"
+    expect(model.machines[0].helpers["pat"]).to be_a MachineBuilder
+    expect(model.machines[0].helpers["pat"].name).to eq "Patrick O'Brien"
+    expect(model.machines[0].helpers["pat"].email).to eq "Patrick.O.Brien@example.com"
+    expect(model.machines[0].helpers["pat"].phone).to eq "123 456 791"
+    expect(model.machines[0].helpers["pat"].office).to eq "Hammersmith"
+    expect(model.machines[1].name).to eq "The Second Machine"
+    expect(model.machines[1].weight).to eq "34"
+    expect(model.machines[1].speed).to eq "289"
+    expect(model.machines[1].builder.name).to eq "The Second Machine Builder"
+    expect(model.machines[1].builder.email).to eq "waggie@bump"
+    expect(model.machines[1].builder.phone).to eq "4101"
+    expect(model.machines[1].builder.office).to eq "3rd floor room 23"
+    expect(model.machines[1].assemblies[0].name).to eq "second machine, second assembly"
+    expect(model.machines[1].assemblies[0].colour).to eq "turquoise"
+    expect(model.machines[1].assemblies[0].size).to eq "large-ish"
+    expect(model.machines[1].assemblies[1].name).to eq "second machine, first assembly"
+    expect(model.machines[1].assemblies[1].colour).to eq "purple"
+    expect(model.machines[1].assemblies[1].size).to eq "pretty small"
+    expect(model.machines[1].assemblies[2].name).to eq "second machine, third assembly"
+    expect(model.machines[1].assemblies[2].colour).to eq "magenta"
+    expect(model.machines[1].assemblies[2].size).to eq "gigantic"
+    expect(model.machines[1].dimensions[0]).to eq "1985.85"
+    expect(model.machines[1].dimensions[1]).to eq "7234.92"
+    expect(model.machines[1].dimensions[2]).to eq "9725.52"
+    expect(model.machines[1].dimensions[3]).to eq "3579.79"
+    expect(model.machines[1].team).to eq({ "lead" => "Joyce", "code" => "O'Brien", "design" => "Moore", "muffins" => "MacNamara"})
+    expect(model.contraptions[0].x).to eq "19"
+    expect(model.contraptions[0].y).to eq "0.003"
+    expect(model.contraptions[1].x).to eq "12"
+    expect(model.contraptions[1].y).to eq "0.0012"
+    expect(model.contraptions[2].x).to eq "24"
+    expect(model.contraptions[2].y).to eq "0.00063"
+    expect(model.contraptions[3].x).to eq "16"
+    expect(model.contraptions[3].y).to eq "0.00091"
+    expect(model.countries[0]).to eq "France"
+    expect(model.countries[1]).to eq "Sweden"
+    expect(model.countries[2]).to eq "Germany"
+    expect(model.countries[3]).to eq "Ireland"
+    expect(model.countries[4]).to eq "Spain"
 
     sensibly_indexed_props = props.merge({
                                            "machines[1].assemblies[0].name"   => "second machine, second assembly",
@@ -199,10 +199,10 @@ describe Aduki::Initializer do
 
     silly_keys.each { |k| sensibly_indexed_props.delete k }
 
-    Aduki.to_aduki(model).should == sensibly_indexed_props
+    expect(Aduki.to_aduki(model)).to eq sensibly_indexed_props
   end
 
-  it "should initialize attributes of pre-initialized nested objects" do
+  it "initializes attributes of pre-initialized nested objects" do
     props = {
       "name"                => "Brackish Water",
       "gadget.name"         => "The Loud Gadget",
@@ -214,15 +214,15 @@ describe Aduki::Initializer do
 
     model = Model.new props
 
-    model.name.should == "Brackish Water"
-    model.gadget.name.should == "The Loud Gadget"
-    model.gadget.speaker.should be_a Speaker
-    model.gadget.speaker.ohms.should == "29"
+    expect(model.name).to eq "Brackish Water"
+    expect(model.gadget.name).to eq "The Loud Gadget"
+    expect(model.gadget.speaker).to be_a Speaker
+    expect(model.gadget.speaker.ohms).to eq "29"
 
     expect(model.gadget.speaker.dates).to eq [ Date.parse("2015-03-12"), Date.parse("2015-06-08"), Date.parse("2015-06-21") ]
   end
 
-  it "should handle pre-initialized arrays without a given array type" do
+  it "handles pre-initialized arrays without a given array type" do
     props = {
       "name"                => "Brackish Water",
       "gadget.name"         => "The Loud Gadget",
@@ -237,7 +237,7 @@ describe Aduki::Initializer do
     expect(model.gadget.speaker.dimensions).to eq [ "12", "8", "21" ]
   end
 
-  it "should handle pre-initialized arrays with a previously-set array type" do
+  it "handles pre-initialized arrays with a previously-set array type" do
     props = {
       "name"                => "Brackish Water",
       "gadget.name"         => "The Loud Gadget",
@@ -252,7 +252,7 @@ describe Aduki::Initializer do
     expect(model.gadget.speaker.threads).to eq [ 12.4, 8.16, 21.42 ]
   end
 
-  it "should handle pre-initialized hashes" do
+  it "handles pre-initialized hashes" do
     props = {
       "name"                => "Brackish Water",
       "gadget.name"         => "The Loud Gadget",
@@ -266,7 +266,7 @@ describe Aduki::Initializer do
     expect(model.gadget.variables).to eq({ "x"=> "29", "y" => "12.4", "z" => "8.16"})
   end
 
-  it "should handle pre-initialized hashes with more complex subkeys" do
+  it "handles pre-initialized hashes with more complex subkeys" do
     props = {
       "name"                => "Brackish Water",
       "gadget.name"         => "The Loud Gadget",

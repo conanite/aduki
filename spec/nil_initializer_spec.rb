@@ -3,7 +3,7 @@ require "spec_helper"
 
 describe Aduki::Initializer do
 
-  it "should silently accept nil initializer parameter" do
+  it "silently accepts nil initializer parameter" do
     contraption = Assembly.new
 
     expect(contraption.name  ).to be_nil
