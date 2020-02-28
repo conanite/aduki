@@ -32,4 +32,25 @@ describe Aduki::AttrFinder do
     expect(politician.city.name).to eq ""
     expect(politician.gifts.map(&:name)).to eq [""]
   end
+
+  it "converts atomic items to arrays when necessary" do
+    g0 = Gift.lookup "whiskey"
+    g1 = Gift.lookup "cigars"
+
+    pol_0 = Politician.new gifts: [g0, g1]
+    expect(pol_0.gifts).to eq [g0, g1]
+    expect(pol_0.gift_names).to eq ["whiskey", "cigars"]
+
+    pol_1 = Politician.new gift_names: ["whiskey", "cigars"]
+    expect(pol_1.gifts).to eq [g0, g1]
+    expect(pol_1.gift_names).to eq ["whiskey", "cigars"]
+
+    pol_2 = Politician.new gift_names: "whiskey"
+    expect(pol_2.gifts).to eq [g0]
+    expect(pol_2.gift_names).to eq ["whiskey"]
+
+    pol_3 = Politician.new gifts: g1
+    expect(pol_3.gifts).to eq [g1]
+    expect(pol_3.gift_names).to eq ["cigars"]
+  end
 end

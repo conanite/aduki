@@ -94,7 +94,7 @@ remove_method :birthday_gifts=      if method_defined?(:birthday_gifts=)
 attr_reader :birthday_gift_prices
 
 def birthday_gift_prices= x
-  @birthday_gift_prices = x
+  @birthday_gift_prices = Array(x)
   @birthday_gifts      = nil
 end
 
@@ -104,8 +104,8 @@ def birthday_gifts
 end
 
 def birthday_gifts= x
-  @birthday_gift_prices = x ? x.map(&:price) : nil
-  @birthday_gifts      = x
+  @birthday_gift_prices = x ? Array(x).map(&:price) : nil
+  @birthday_gifts      = Array(x)
 end
 EXPECTED
     expect(txt).to eq expected
@@ -122,7 +122,7 @@ remove_method :birthday_gifts=      if method_defined?(:birthday_gifts=)
 attr_reader :birthday_gift_prices
 
 def birthday_gift_prices= x
-  @birthday_gift_prices = x
+  @birthday_gift_prices = Array(x)
   @birthday_gifts      = nil
 end
 
@@ -132,8 +132,8 @@ def birthday_gifts
 end
 
 def birthday_gifts= x
-  @birthday_gift_prices = x ? x.map(&:price) : nil
-  @birthday_gifts      = x
+  @birthday_gift_prices = x ? Array(x).map(&:price) : nil
+  @birthday_gifts      = Array(x)
 end
 EXPECTED
     expect(txt).to eq expected
