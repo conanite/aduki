@@ -61,10 +61,9 @@ EVAL
   end
 
   def self.one2many_attr_finder_text finder, id, name, options={ }
-    singular = singularize name.to_s
+    singular = options[:singular] || singularize(name.to_s)
     klass    = options[:class_name] || camelize(singular)
     id_method  = "#{singular}_#{pluralize id}"
-    id_method1 = "#{singular}_#{id}"
     <<EVAL
 remove_method :#{id_method}  if method_defined?(:#{id_method})
 remove_method :#{id_method}= if method_defined?(:#{id_method}=)
