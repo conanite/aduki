@@ -6,6 +6,7 @@ require "aduki/attr_finder"
 
 module Aduki
   def self.install_monkey_patches
+    require 'core_ext/class'
     require 'core_ext/array'
     require 'core_ext/hash'
   end
@@ -162,6 +163,16 @@ module Aduki
         attr_reader attr unless method_defined? attr
         attr_writer attr unless method_defined? :"#{attr}="
       end
+    end
+
+    class SubClassFinder < Struct.new(:kla)
+      def aduki_find name
+        kla.get_subclass! name
+      end
+    end
+
+    def aduki_subclass kla
+      SubClassFinder.new(kla)
     end
 
     def aduki_initialize name, initial_klass, type=:notset
