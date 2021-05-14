@@ -1,6 +1,6 @@
 class Class
   def get_subclass name
-    descendants.detect { |kla| kla.name == name }
+    name.is_a?(Class) ? ((name < self) && name) : (descendants.detect { |kla| kla.name == name })
   end
 
   def get_subclass! name
