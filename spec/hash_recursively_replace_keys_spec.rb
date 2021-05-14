@@ -24,11 +24,11 @@ describe Hash do
       expected = {
         :FOO_BAR               => 1,
         :HEYHO                 => 2,
-        :"TWEEDLé DUM"         => 3,
+        :"TWEEDLÉ DUM"         => 3,
         :"4"                   => 4,
         :"20 SOMETHING?"       => true,
         :"** MORE FUN 2 !! **" => true,
-        :"çA Và"               => true,
+        :"ÇA VÀ"               => true,
         :"((A B C))"           => true,
         :NANA                  => {
           :"A B C"             => 1,
