@@ -94,12 +94,12 @@ remove_method :birthday_gifts=      if method_defined?(:birthday_gifts=)
 attr_reader :birthday_gift_prices
 
 def birthday_gift_prices= x
-  @birthday_gift_prices = Array(x).select { |i| i != nil }
+  @birthday_gift_prices = Array(x)
   @birthday_gifts      = nil
 end
 
 def birthday_gifts
-  @birthday_gifts ||= BirthdayGift.purchase @birthday_gift_prices unless @birthday_gift_prices.nil?
+  @birthday_gifts ||= BirthdayGift.purchase(@birthday_gift_prices.select { |i| i != nil }) unless @birthday_gift_prices.nil?
   @birthday_gifts
 end
 
@@ -122,12 +122,12 @@ remove_method :birthday_gifts=      if method_defined?(:birthday_gifts=)
 attr_reader :birthday_gift_prices
 
 def birthday_gift_prices= x
-  @birthday_gift_prices = Array(x).select { |i| i != "skip" }
+  @birthday_gift_prices = Array(x)
   @birthday_gifts      = nil
 end
 
 def birthday_gifts
-  @birthday_gifts ||= BirthdayGift.purchase @birthday_gift_prices unless @birthday_gift_prices.nil?
+  @birthday_gifts ||= BirthdayGift.purchase(@birthday_gift_prices.select { |i| i != "skip" }) unless @birthday_gift_prices.nil?
   @birthday_gifts
 end
 
@@ -150,12 +150,12 @@ remove_method :birthday_gifts=      if method_defined?(:birthday_gifts=)
 attr_reader :birthday_gift_prices
 
 def birthday_gift_prices= x
-  @birthday_gift_prices = Array(x).select { |i| i != nil }
+  @birthday_gift_prices = Array(x)
   @birthday_gifts      = nil
 end
 
 def birthday_gifts
-  @birthday_gifts ||= ToyShop.purchase @birthday_gift_prices unless @birthday_gift_prices.nil?
+  @birthday_gifts ||= ToyShop.purchase(@birthday_gift_prices.select { |i| i != nil }) unless @birthday_gift_prices.nil?
   @birthday_gifts
 end
 

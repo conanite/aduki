@@ -74,12 +74,12 @@ remove_method :#{name}=      if method_defined?(:#{name}=)
 attr_reader :#{id_method}
 
 def #{id_method}= x
-  @#{id_method} = Array(x).select { |i| i != #{ignore} }
+  @#{id_method} = Array(x)
   @#{name}      = nil
 end
 
 def #{name}
-  @#{name} ||= #{klass}.#{finder} @#{id_method} unless @#{id_method}.nil?
+  @#{name} ||= #{klass}.#{finder}(@#{id_method}.select { |i| i != #{ignore} }) unless @#{id_method}.nil?
   @#{name}
 end
 
