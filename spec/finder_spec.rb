@@ -94,7 +94,35 @@ remove_method :birthday_gifts=      if method_defined?(:birthday_gifts=)
 attr_reader :birthday_gift_prices
 
 def birthday_gift_prices= x
-  @birthday_gift_prices = Array(x)
+  @birthday_gift_prices = Array(x).select { |i| i != nil }
+  @birthday_gifts      = nil
+end
+
+def birthday_gifts
+  @birthday_gifts ||= BirthdayGift.purchase @birthday_gift_prices unless @birthday_gift_prices.nil?
+  @birthday_gifts
+end
+
+def birthday_gifts= x
+  @birthday_gift_prices = x ? Array(x).map(&:price) : nil
+  @birthday_gifts      = Array(x)
+end
+EXPECTED
+    expect(txt).to eq expected
+  end
+
+  it "generates a one-to-many finder with a custom ignore value" do
+    txt = Aduki::AttrFinder.one2many_attr_finder_text :purchase, :price, :birthday_gifts, ignore: "skip"
+    expected = <<EXPECTED
+remove_method :birthday_gift_prices  if method_defined?(:birthday_gift_prices)
+remove_method :birthday_gift_prices= if method_defined?(:birthday_gift_prices=)
+remove_method :birthday_gifts       if method_defined?(:birthday_gifts)
+remove_method :birthday_gifts=      if method_defined?(:birthday_gifts=)
+
+attr_reader :birthday_gift_prices
+
+def birthday_gift_prices= x
+  @birthday_gift_prices = Array(x).select { |i| i != "skip" }
   @birthday_gifts      = nil
 end
 
@@ -122,7 +150,7 @@ remove_method :birthday_gifts=      if method_defined?(:birthday_gifts=)
 attr_reader :birthday_gift_prices
 
 def birthday_gift_prices= x
-  @birthday_gift_prices = Array(x)
+  @birthday_gift_prices = Array(x).select { |i| i != nil }
   @birthday_gifts      = nil
 end
 

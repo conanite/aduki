@@ -63,6 +63,7 @@ EVAL
   def self.one2many_attr_finder_text finder, id, name, options={ }
     singular = options[:singular] || singularize(name.to_s)
     klass    = options[:class_name] || camelize(singular)
+    ignore   = options[:ignore].inspect
     id_method  = "#{singular}_#{pluralize id}"
     <<EVAL
 remove_method :#{id_method}  if method_defined?(:#{id_method})
@@ -73,7 +74,7 @@ remove_method :#{name}=      if method_defined?(:#{name}=)
 attr_reader :#{id_method}
 
 def #{id_method}= x
-  @#{id_method} = Array(x)
+  @#{id_method} = Array(x).select { |i| i != #{ignore} }
   @#{name}      = nil
 end
 
